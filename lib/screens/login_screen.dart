@@ -98,7 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       passwordField,
                       const SizedBox(height: 45),
                       loginButton,
-                      const SizedBox(height: 45),
+                      const SizedBox(height: 45), 
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           GestureDetector(
                             onTap: () {},
                             child: const Text(
-                              "Registrati",
+                              "Registrati", 
                               style: TextStyle(
                                   color: Colors.redAccent,
                                   fontWeight: FontWeight.bold,
