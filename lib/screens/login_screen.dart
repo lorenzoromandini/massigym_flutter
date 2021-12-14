@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:massigym_flutter/screens/home_screen.dart';
+import 'package:massigym_flutter/screens/registration_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -62,7 +64,10 @@ class _LoginScreenState extends State<LoginScreen> {
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushReplacement(context,
+              MaterialPageRoute(builder: (context) => const HomeScreen()));
+        },
         child: const Text(
           "Login",
           textAlign: TextAlign.center,
@@ -98,15 +103,21 @@ class _LoginScreenState extends State<LoginScreen> {
                       passwordField,
                       const SizedBox(height: 45),
                       loginButton,
-                      const SizedBox(height: 45), 
+                      const SizedBox(height: 45),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           const Text("Non sei ancora registrato?"),
                           GestureDetector(
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RegistrationScreen()));
+                            },
                             child: const Text(
-                              "Registrati", 
+                              "Registrati",
                               style: TextStyle(
                                   color: Colors.redAccent,
                                   fontWeight: FontWeight.bold,
