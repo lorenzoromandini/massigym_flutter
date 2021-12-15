@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:massigym_flutter/models/user_model.dart';
+import 'package:massigym_flutter/screens/login_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -8,6 +12,22 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  User? user = FirebaseAuth.instance.currentUser;
+  UserModel loggedInUser = UserModel();
+
+  @override
+  void initState() {
+    super.initState();
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc(user!.email)
+        .get()
+        .then((value) {
+      loggedInUser = UserModel.fromMap(value.data());
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,23 +47,33 @@ class _HomeScreenState extends State<HomeScreen> {
                 "Welcome back",
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 10),
-              const Text("Name",
+              const SizedBox(height: 10),
+              Text("${loggedInUser.username}",
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   )),
-              const Text("Email",
+              Text("${user!.email}",
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   )),
               const SizedBox(height: 15),
-              ActionChip(label: const Text("Logout"), onPressed: () {})
+              ActionChip(
+                  label: const Text("Logout"),
+                  onPressed: () {
+                    logout(context);
+                  })
             ],
           ),
         ),
       ),
     );
+  }
+
+  Future<void> logout(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => LoginScreen()));
   }
 }

@@ -1,7 +1,18 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:massigym_flutter/screens/login_screen.dart';
 
-void main() {
+Future <void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: const FirebaseOptions(
+      apiKey: "AIzaSyAKAV2o4YGcJNFnUbgdxN4cVzr9s2EUrSE", // Your apiKey
+      appId: "XXX", // Your appId
+      messagingSenderId: "XXX", // Your messagingSenderId
+      projectId: "massigym-80757", // Your projectId
+    ),
+  );
+
   runApp(const MyApp());
 }
 
