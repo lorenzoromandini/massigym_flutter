@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:massigym_flutter/screens/home_screen.dart';
+import 'package:massigym_flutter/bottomNavBar.dart';
 import 'package:massigym_flutter/screens/registration_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -164,7 +164,7 @@ class _LoginScreenState extends State<LoginScreen> {
           .then((uid) => {
                 Fluttertoast.showToast(msg: "Login successful"),
                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => const HomeScreen())),
+                    builder: (context) => BottomNavBar())),
               })
           .catchError((e) {
         Fluttertoast.showToast(msg: e!.message);
