@@ -2,7 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:massigym_flutter/models/user_model.dart';
-import 'package:massigym_flutter/screens/login_screen.dart';
+import 'package:massigym_flutter/screens/personal_workout.dart';
+import 'package:massigym_flutter/screens/preferiti.dart';
+import 'package:massigym_flutter/screens/profilo.dart';
 
 class PersonaleScreen extends StatefulWidget {
   const PersonaleScreen({Key? key}) : super(key: key);
@@ -12,100 +14,103 @@ class PersonaleScreen extends StatefulWidget {
 }
 
 class _PersonaleScreenState extends State<PersonaleScreen> {
-  User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
-
-  @override
-  void initState() {
-    super.initState();
-    FirebaseFirestore.instance
-        .collection("users")
-        .doc(user!.email)
-        .get()
-        .then((value) {
-      loggedInUser = UserModel.fromMap(value.data());
-      setState(() {});
-    });
-  }
-
-  int _currentIndex = 0;
-
   @override
   Widget build(BuildContext context) {
+    final personalWorkoutButton = Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(30),
+      color: Colors.redAccent,
+      child: MaterialButton(
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        minWidth: MediaQuery.of(context).size.width,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PersonalWorkout()),
+          );
+        },
+        child: const Text(
+          "I miei Workout",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+
+    final preferitiButton = Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(30),
+      color: Colors.redAccent,
+      child: MaterialButton(
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        minWidth: MediaQuery.of(context).size.width,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Preferiti()),
+          );
+        },
+        child: const Text(
+          "Preferiti",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+
+    final profiloButton = Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(30),
+      color: Colors.redAccent,
+      child: MaterialButton(
+        padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
+        minWidth: MediaQuery.of(context).size.width,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => Profilo()),
+          );
+        },
+        child: const Text(
+          "Profilo",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
+
     return Scaffold(
-      appBar: AppBar(title: const Text("Personale"), centerTitle: true),
+      backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text("Personale"),
+      ),
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              SizedBox(
-                height: 100,
-                child: Image.asset("assets/logo.png", fit: BoxFit.contain),
+        child: SingleChildScrollView(
+          child: Container(
+            color: Colors.white,
+            child: Padding(
+              padding: const EdgeInsets.all(36.0),
+              child: Form(
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      const SizedBox(height: 45),
+                      personalWorkoutButton,
+                      const SizedBox(height: 45),
+                      preferitiButton,
+                      const SizedBox(height: 45),
+                      profiloButton,
+                      const SizedBox(height: 45),
+                    ]),
               ),
-              const Text(
-                "Welcome back",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 10),
-              Text("${loggedInUser.username}",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  )),
-              Text("${user!.email}",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  )),
-              const SizedBox(height: 15),
-              ActionChip(
-                  label: const Text("Logout"),
-                  onPressed: () {
-                    logout(context);
-                  })
-            ],
+            ),
           ),
         ),
       ),
-     /* bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.green,
-        iconSize: 30,
-        selectedFontSize: 20,
-        unselectedFontSize: 10,
-        showSelectedLabels: true,
-        showUnselectedLabels: false,
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Workout",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: "Personale",
-          ),
-        ],
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
-      ), */
     );
   }
-
-  Future<void> logout(BuildContext context) async {
-    await FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => LoginScreen()));
-  }
 }
-

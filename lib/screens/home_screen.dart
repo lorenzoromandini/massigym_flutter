@@ -22,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     children: <Widget>[
                       SizedBox(
                         height: 100,
+                                                                child: Card(child: Text("Porcoooo"),)
                       ),
                       const Text(
                         "Welcome back",

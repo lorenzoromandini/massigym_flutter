@@ -194,6 +194,28 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       const SizedBox(height: 45),
                       signUpButton,
                       const SizedBox(height: 45),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          const Text("Sei già registrato?"),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LoginScreen()));
+                            },
+                            child: const Text(
+                              "Torna al Login",
+                              style: TextStyle(
+                                  color: Colors.redAccent,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ),
+                          ),
+                        ],
+                      )
                     ],
                   )),
             ),
