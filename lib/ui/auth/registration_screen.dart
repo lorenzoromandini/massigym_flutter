@@ -229,7 +229,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
   }
 
-  postDetailsToFirestore() async {
+  void postDetailsToFirestore() async {
     // calling our firestore
     // calling our user model
     // sending these values

@@ -29,7 +29,6 @@ class _ProfiloState extends State<Profilo> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -43,6 +42,13 @@ class _ProfiloState extends State<Profilo> {
             Navigator.pop(context);
           },
         ),
+        actions: <Widget>[
+          IconButton(
+              onPressed: () {
+                logout(context);
+              },
+              icon: const Icon(Icons.exit_to_app))
+        ],
       ),
       body: Center(
         child: Padding(
@@ -70,12 +76,6 @@ class _ProfiloState extends State<Profilo> {
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   )),
-              const SizedBox(height: 15),
-              ActionChip(
-                  label: const Text("Logout"),
-                  onPressed: () {
-                    logout(context);
-                  })
             ],
           ),
         ),
@@ -85,7 +85,9 @@ class _ProfiloState extends State<Profilo> {
 
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    Navigator.pushAndRemoveUntil(context,
-        MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()),
+        (route) => false);
   }
 }
