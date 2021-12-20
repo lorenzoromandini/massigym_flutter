@@ -85,7 +85,7 @@ class _ProfiloState extends State<Profilo> {
 
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
-    Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => LoginScreen()));
+    Navigator.pushAndRemoveUntil(context,
+        MaterialPageRoute(builder: (context) => const LoginScreen()), (route) => false);
   }
 }

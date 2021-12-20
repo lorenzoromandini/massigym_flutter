@@ -101,6 +101,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        title: Text("Login"),
+        elevation: 0,
+      ),
       body: Center(
         child: SingleChildScrollView(
           child: Container(
@@ -132,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           const Text("Non sei ancora registrato?"),
                           GestureDetector(
                             onTap: () {
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
