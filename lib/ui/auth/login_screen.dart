@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:massigym_flutter/bottomNavBar.dart';
-import 'package:massigym_flutter/screens/registration_screen.dart';
+import 'package:massigym_flutter/ui/common/bottomNavBar.dart';
+import 'package:massigym_flutter/ui/auth/registration_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);

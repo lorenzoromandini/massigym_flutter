@@ -1,10 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:massigym_flutter/models/user_model.dart';
-import 'package:massigym_flutter/screens/personal_workout.dart';
-import 'package:massigym_flutter/screens/preferiti.dart';
-import 'package:massigym_flutter/screens/profilo.dart';
+import 'package:massigym_flutter/ui/personal/personal_workout.dart';
+import 'package:massigym_flutter/ui/personal/preferiti.dart';
+import 'package:massigym_flutter/ui/personal/profilo.dart';
 
 class PersonaleScreen extends StatefulWidget {
   const PersonaleScreen({Key? key}) : super(key: key);
@@ -70,7 +67,7 @@ class _PersonaleScreenState extends State<PersonaleScreen> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => Profilo()),
+            MaterialPageRoute(builder: (context) => const Profilo()),
           );
         },
         child: const Text(

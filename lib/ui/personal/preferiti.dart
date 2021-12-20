@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:massigym_flutter/screens/personale_screen.dart';
 
-class PersonalWorkout extends StatefulWidget {
-  PersonalWorkout({Key? key}) : super(key: key);
+class Preferiti extends StatefulWidget {
+  Preferiti({Key? key}) : super(key: key);
 
   @override
-  _PersonalWorkoutState createState() => _PersonalWorkoutState();
+  _PreferitiState createState() => _PreferitiState();
 }
 
-class _PersonalWorkoutState extends State<PersonalWorkout> {
+class _PreferitiState extends State<Preferiti> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        title: Text("Preferiti"),
         elevation: 0,
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.red),

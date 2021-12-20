@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:massigym_flutter/bottomNavBar.dart';
 import 'package:massigym_flutter/models/user_model.dart';
-import 'package:massigym_flutter/screens/login_screen.dart';
-import 'package:massigym_flutter/screens/personale_screen.dart';
+import 'package:massigym_flutter/ui/auth/login_screen.dart';
+import 'package:massigym_flutter/ui/personal/personale_screen.dart';
 
 class Profilo extends StatefulWidget {
-  Profilo({Key? key}) : super(key: key);
+  const Profilo({Key? key}) : super(key: key);
 
   @override
   _ProfiloState createState() => _ProfiloState();
@@ -30,7 +29,6 @@ class _ProfiloState extends State<Profilo> {
     });
   }
 
-  int _currentIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +80,6 @@ class _ProfiloState extends State<Profilo> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavBar(),
     );
   }
 
