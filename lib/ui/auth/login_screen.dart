@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:massigym_flutter/ui/common/bottomNavBar.dart';
 import 'package:massigym_flutter/ui/auth/registration_screen.dart';
 
+<<<<<<< HEAD
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -13,6 +14,8 @@ class Login extends StatelessWidget {
   }
 }
 
+=======
+>>>>>>> 7b4a634d4f87ebc2ce4e598b97a0998c4ea96d25
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 

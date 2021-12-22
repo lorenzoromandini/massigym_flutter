@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+<<<<<<< HEAD
 import 'package:massigym_flutter/models/movie.dart';
 import 'package:massigym_flutter/ui/movie_details_screen.dart';
 
@@ -12,6 +13,9 @@ class Home extends StatelessWidget {
 }
 
 /*
+=======
+
+>>>>>>> 7b4a634d4f87ebc2ce4e598b97a0998c4ea96d25
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
 
@@ -20,7 +24,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7b4a634d4f87ebc2ce4e598b97a0998c4ea96d25
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,7 +95,10 @@ class _HomeScreenState extends State<HomeScreen> {
               "Porcoddio",
               style: TextStyle(fontWeight: FontWeight.bold),
               textAlign: TextAlign.start,
+<<<<<<< HEAD
 
+=======
+>>>>>>> 7b4a634d4f87ebc2ce4e598b97a0998c4ea96d25
             ),
           ),
           Stack(
@@ -139,6 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+<<<<<<< HEAD
 */
 
 class MovieListScreen extends StatelessWidget {
@@ -171,3 +182,5 @@ class MovieListScreen extends StatelessWidget {
             }));
   }
 }
+=======
+>>>>>>> 7b4a634d4f87ebc2ce4e598b97a0998c4ea96d25
