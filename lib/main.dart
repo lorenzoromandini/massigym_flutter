@@ -27,46 +27,8 @@ class MyApp extends StatelessWidget {
       title: 'massigym',
       theme: ThemeData(
         primarySwatch: Colors.lightBlue,
-<<<<<<< HEAD
       ),
       home: StartScreen(),
-=======
-      ),
-      home: StartScreen(),
-    );
-  }
-}
-
-class StartScreen extends StatefulWidget {
-  StartScreen({Key? key}) : super(key: key);
-
-  @override
-  _StartScreenState createState() => _StartScreenState();
-}
-
-class _StartScreenState extends State<StartScreen> {
-  @override
-  void initState() {
-    super.initState();
-    Timer(const Duration(milliseconds: 1400), () {
-      Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => const LoginScreen()));
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset('assets/logo.png'),
-          ],
-        ),
-      ),
->>>>>>> 7b4a634d4f87ebc2ce4e598b97a0998c4ea96d25
     );
   }
 }

@@ -1,13 +1,9 @@
-<<<<<<< HEAD
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:massigym_flutter/models/workout.dart';
 import 'package:massigym_flutter/ui/personal/personal_workout.dart';
-=======
-import 'package:flutter/material.dart';
->>>>>>> 7b4a634d4f87ebc2ce4e598b97a0998c4ea96d25
 
 class AddWorkout extends StatefulWidget {
   AddWorkout({Key? key}) : super(key: key);
@@ -17,7 +13,6 @@ class AddWorkout extends StatefulWidget {
 }
 
 class _AddWorkoutState extends State<AddWorkout> {
-<<<<<<< HEAD
   final _auth = FirebaseAuth.instance;
 
   final _formKey = GlobalKey<FormState>();
@@ -157,10 +152,6 @@ class _AddWorkoutState extends State<AddWorkout> {
       ),
     );
 
-=======
-  @override
-  Widget build(BuildContext context) {
->>>>>>> 7b4a634d4f87ebc2ce4e598b97a0998c4ea96d25
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -173,7 +164,6 @@ class _AddWorkoutState extends State<AddWorkout> {
           },
         ),
       ),
-<<<<<<< HEAD
       body: Center(
         child: SingleChildScrollView(
           child: Container(
@@ -237,8 +227,4 @@ class _AddWorkoutState extends State<AddWorkout> {
           (route) => false);
     }
   }
-=======
-    );
-  }
->>>>>>> 7b4a634d4f87ebc2ce4e598b97a0998c4ea96d25
 }

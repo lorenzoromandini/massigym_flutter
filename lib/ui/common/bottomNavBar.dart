@@ -12,11 +12,7 @@ class BottomNavBar extends StatefulWidget {
 
 class _BottomNavBarState extends State<BottomNavBar> {
   PageController _pageController = PageController();
-<<<<<<< HEAD
   List<Widget> _screens = [MovieListScreen(), WorkoutTabBar(), PersonaleScreen()];
-=======
-  List<Widget> _screens = [HomeScreen(), WorkoutTabBar(), PersonaleScreen()];
->>>>>>> 7b4a634d4f87ebc2ce4e598b97a0998c4ea96d25
 
   int _selectedIndex = 0;
 
