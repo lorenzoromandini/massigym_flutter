@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "651991800208",
+    "project_id": "massigym-80757",
+    "storage_bucket": "massigym-80757.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:651991800208:android:5080048b3a538adb48bb15",
+        "android_client_info": {
+          "package_name": "com.example.massigym"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "651991800208-qdtc4crbglo2mhqeutb1lnc3cbfv9fph.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.massigym",
+            "certificate_hash": "0cc6b80471c3fd5fbd2d481d5bf53ab84fed2cfc"
+          }
+        },
+        {
+          "client_id": "651991800208-las528s80n71nv1rrl98loho1hevqunb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDAYzGXEYcWYBtfVNcIkFWu9mw4oVBm1gw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "651991800208-las528s80n71nv1rrl98loho1hevqunb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
