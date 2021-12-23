@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:massigym_flutter/models/movie.dart';
 import 'package:massigym_flutter/ui/movie_details_screen.dart';
@@ -161,3 +162,4 @@ class MovieListScreen extends StatelessWidget {
             }));
   }
 }
+

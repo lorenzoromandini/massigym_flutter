@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:massigym_flutter/models/workout.dart';
-import 'package:massigym_flutter/ui/personal/personal_workout.dart';
+import 'package:massigym_flutter/ui/common/bottomNavBar.dart';
 
 class AddWorkout extends StatefulWidget {
   AddWorkout({Key? key}) : super(key: key);
@@ -13,14 +13,33 @@ class AddWorkout extends StatefulWidget {
 }
 
 class _AddWorkoutState extends State<AddWorkout> {
-  final _auth = FirebaseAuth.instance;
-
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController categoryController = TextEditingController();
   final TextEditingController nameController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
   final TextEditingController durationController = TextEditingController();
+
+  final List<String> category = ['cardio', 'legs', 'arms'];
+  String? categoryValue;
+  final List<String> duration = [
+    '15',
+    '30',
+    '45',
+    '60',
+    '90',
+    '120',
+    '150',
+    '180',
+    '210',
+    '240',
+    '270',
+    '300',
+    '400',
+    '500',
+    '600'
+  ];
+  String? durationValue;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +70,7 @@ class _AddWorkoutState extends State<AddWorkout> {
           )),
     );
 
+/*
     // category field
     final categoryField = TextFormField(
       autofocus: false,
@@ -76,6 +96,37 @@ class _AddWorkoutState extends State<AddWorkout> {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
+    );
+    */
+
+    DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
+        value: item,
+        child: Text(item,
+            style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20)));
+
+    final categoryField = Container(
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.grey, width: 1)),
+      child: DropdownButtonFormField<String>(
+        hint: Text("Category"),
+        //   value: (categoryValue == 'null') ?  "Inserire categoria" : categoryValue,
+        value: categoryValue,
+
+        icon: Icon(Icons.arrow_drop_down, color: Colors.black),
+        iconSize: 36,
+        isExpanded: true,
+        items: category.map(buildMenuItem).toList(),
+        onChanged: (value) => setState(() {
+          this.categoryValue = value;
+        }),
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Please enter a category';
+          }
+        },
+      ),
     );
 
     // description field
@@ -105,6 +156,7 @@ class _AddWorkoutState extends State<AddWorkout> {
           )),
     );
 
+/*
     // duration field
     final durationField = TextFormField(
       autofocus: false,
@@ -130,6 +182,30 @@ class _AddWorkoutState extends State<AddWorkout> {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
+    );
+    */
+
+    final durationField = Container(
+      padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          border: Border.all(color: Colors.grey, width: 1)),
+      child: DropdownButtonFormField<String>(
+        hint: Text("Durata"),
+        value: durationValue,
+        icon: Icon(Icons.arrow_drop_down, color: Colors.black),
+        iconSize: 36,
+        isExpanded: true,
+        items: duration.map(buildMenuItem).toList(),
+        onChanged: (value) => setState(() {
+          this.durationValue = value;
+        }),
+        validator: (value) {
+          if (value!.isEmpty) {
+            return 'Please enter a valid duration';
+          }
+        },
+      ),
     );
 
     final insertWorkoutButton = Material(
@@ -206,24 +282,34 @@ class _AddWorkoutState extends State<AddWorkout> {
       String name, String category, String description, String duration) async {
     if (_formKey.currentState!.validate()) {
       FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-      User? user = _auth.currentUser;
+      User? user = FirebaseAuth.instance.currentUser;
       WorkoutModel workoutModel = WorkoutModel();
 
       workoutModel.name = nameController.text;
-      workoutModel.category = categoryController.text;
+      workoutModel.category = categoryValue;
       workoutModel.description = descriptionController.text;
-      workoutModel.duration = durationController.text;
-      workoutModel.userMail = user!.uid;
+      workoutModel.duration = durationValue;
+      workoutModel.userMail = user!.email;
+
+      List<String> splitName = name.split(" ");
+      workoutModel.searchKeyList = [];
+
+      for (int i = 0; i < splitName.length; i++) {
+        for (int y = 1; y < splitName[i].length + 1; y++) {
+          workoutModel.searchKeyList!
+              .add(splitName[i].substring(0, y).toLowerCase());
+        }
+      }
 
       await firebaseFirestore
           .collection("${workoutModel.category}")
-          .doc(workoutModel.uid)
+          .doc()
           .set(workoutModel.toMap());
 
       Fluttertoast.showToast(msg: "Allenamento inserito con successo");
       Navigator.pushAndRemoveUntil(
           (context),
-          MaterialPageRoute(builder: (context) => PersonalWorkout()),
+          MaterialPageRoute(builder: (context) => BottomNavBar()),
           (route) => false);
     }
   }
