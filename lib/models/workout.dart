@@ -1,7 +1,6 @@
 
 class WorkoutModel {
   String? userMail;
-  String? uid;
   String? category;
   String? name;
   String? description;

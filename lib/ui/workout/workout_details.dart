@@ -1,16 +1,16 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:massigym_flutter/models/movie.dart';
 
-class MovieDetailsScreen extends StatelessWidget {
-  final Movie movie;
+class WorkoutDetails extends StatelessWidget {
+  final DocumentSnapshot data;
 
-  MovieDetailsScreen(this.movie);
+  WorkoutDetails(this.data);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(movie.title),
+        title: Text(data["name"]),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -19,13 +19,13 @@ class MovieDetailsScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset(
-                movie.imageUrl,
+                "assets/logo.png",
                 height: 500,
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
-                  movie.year.toString(),
+                  data["user"],
                   textAlign: TextAlign.center,
                   style: TextStyle(fontStyle: FontStyle.italic),
                 ),
@@ -33,7 +33,7 @@ class MovieDetailsScreen extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
-                  movie.description,
+                  data["description"],
                   textAlign: TextAlign.justify,
                   style: TextStyle(fontSize: 22.0),
                 ),
