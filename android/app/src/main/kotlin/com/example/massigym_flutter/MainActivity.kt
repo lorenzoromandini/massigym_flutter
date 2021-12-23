@@ -1,4 +1,4 @@
-package com.example.massigym_flutter
+package com.example.massigym
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.massigym_flutter">
+    package="com.example.massigym">
    <application
-        android:label="massigym_flutter"
+        android:label="massigym"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"
