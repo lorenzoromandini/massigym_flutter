@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:massigym_flutter/ui/common/searchWorkout.dart';
+import 'package:massigym_flutter/ui/workout/workout_details.dart';
 
 class Legs extends StatefulWidget {
   Legs({Key? key}) : super(key: key);
@@ -9,7 +11,7 @@ class Legs extends StatefulWidget {
 }
 
 class _LegsState extends State<Legs> {
-   String name = "";
+  String name = "";
 
   @override
   Widget build(BuildContext context) {
@@ -26,47 +28,7 @@ class _LegsState extends State<Legs> {
           },
         ),
       )),
-      body: StreamBuilder<QuerySnapshot>(
-        stream: (name != "" && name != null)
-            ? FirebaseFirestore.instance
-                .collection("legs")
-                .where("searchKeywords", arrayContains: name)
-                .snapshots()
-            : FirebaseFirestore.instance.collection("legs").snapshots(),
-        builder: (context, snapshot) {
-          return (snapshot.connectionState == ConnectionState.waiting)
-              ? Center(child: CircularProgressIndicator())
-              : ListView.builder(
-                  itemCount: snapshot.data!.docs.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    DocumentSnapshot data = snapshot.data!.docs[index];
-                    return Container(
-                      padding: EdgeInsets.only(top: 16.0),
-                      child: Column(
-                        children: [
-                          ListTile(
-                            title: Text(data['name'],
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold)),
-                            leading: CircleAvatar(
-                              child: Image.asset("assets/logo.png",
-                                  width: 100, height: 50, fit: BoxFit.contain),
-                              radius: 40,
-                              backgroundColor: Colors.lightBlue,
-                            ),
-                            trailing: Icon(Icons.shopping_basket,
-                                color: Colors.red, size: 30),
-                          ),
-                          Divider(
-                            thickness: 2,
-                          )
-                        ],
-                      ),
-                    );
-                  },
-                );
-        },
-      ),
+      body: searchWorkout('legs', name),
     );
   }
 }

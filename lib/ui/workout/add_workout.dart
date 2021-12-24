@@ -290,6 +290,8 @@ class _AddWorkoutState extends State<AddWorkout> {
       workoutModel.description = descriptionController.text;
       workoutModel.duration = durationValue;
       workoutModel.userMail = user!.email;
+      workoutModel.favourites = [];
+      workoutModel.ratings = [];
 
       List<String> splitName = name.split(" ");
       workoutModel.searchKeyList = [];

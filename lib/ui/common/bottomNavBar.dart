@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:massigym_flutter/ui/home_screen.dart';
 import 'package:massigym_flutter/ui/personal/personale_screen.dart';
-import 'package:massigym_flutter/ui/workout/workoutTabBar.dart';
+import 'package:massigym_flutter/ui/common/workoutTabBar.dart';
 
 class BottomNavBar extends StatefulWidget {
   BottomNavBar({Key? key}) : super(key: key);

@@ -1,16 +1,80 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:massigym_flutter/models/workout.dart';
 
 class WorkoutDetails extends StatelessWidget {
-  final DocumentSnapshot data;
+  DocumentSnapshot data;
 
   WorkoutDetails(this.data);
+  User? user = FirebaseAuth.instance.currentUser;
+
+  List userFavourite = [];
+
+  bool check = false;
+
+  checkFavourite() {
+    int j = 0;
+    for (String a in data["favourites"]) {
+      if (data["favourites"][j] == user!.email) {
+        check = true;
+      }
+      j++;
+    }
+    return check;
+  }
+
+  addFavourite() {
+    check = true;
+    userFavourite.length = 1;
+    userFavourite[0] = user!.email;
+
+    return FirebaseFirestore.instance
+        .collection(data["category"])
+        .doc(data.id)
+        .update({"favourites": FieldValue.arrayUnion(userFavourite)});
+  }
+
+  removeFavourite() {
+    check = false;
+    userFavourite.length = 1;
+    userFavourite[0] = user!.email;
+
+    return FirebaseFirestore.instance
+        .collection(data["category"])
+        .doc(data.id)
+        .update({"favourites": FieldValue.arrayRemove(userFavourite)});
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(data["name"]),
+        elevation: 0,
+        actions: <Widget>[
+          IconButton(
+            onPressed: () {
+              if (checkFavourite() == false) {
+                addFavourite();
+              } else {
+                removeFavourite();
+              }
+              print(checkFavourite());
+              Navigator.pop(context);
+            },
+            icon: (checkFavourite() == false)
+                ? Icon(
+                    FontAwesome.heart,
+                    color: Colors.white,
+                  )
+                : Icon(
+                    FontAwesome.heart,
+                    color: Colors.red,
+                  ),
+          )
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

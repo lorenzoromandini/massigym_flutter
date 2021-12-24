@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:massigym_flutter/models/user_model.dart';
 import 'package:massigym_flutter/ui/auth/login_screen.dart';
-import 'package:massigym_flutter/ui/personal/personale_screen.dart';
 
 class Profilo extends StatefulWidget {
   const Profilo({Key? key}) : super(key: key);
