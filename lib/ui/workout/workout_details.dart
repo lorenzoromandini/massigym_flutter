@@ -56,15 +56,14 @@ class WorkoutDetails extends StatelessWidget {
         actions: <Widget>[
           IconButton(
             onPressed: () {
-              if (checkFavourite() == false) {
+              if (!checkFavourite()) {
                 addFavourite();
               } else {
                 removeFavourite();
               }
-              print(checkFavourite());
               Navigator.pop(context);
             },
-            icon: (checkFavourite() == false)
+            icon: (!checkFavourite())
                 ? Icon(
                     FontAwesome.heart,
                     color: Colors.white,
