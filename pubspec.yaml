@@ -27,6 +27,7 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  catcher: ^0.6.9
   cloud_firestore: ^3.1.4
   cupertino_icons: ^1.0.2
   firebase_auth: ^3.3.3
@@ -35,6 +36,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_icons: ^1.1.0
+  flutter_screenutil: ^5.0.2
   flutter_secure_storage: ^5.0.2
   fluttertoast: ^8.0.8
   image_picker: ^0.8.4+4
@@ -57,11 +59,7 @@ flutter:
 
   # To add assets to your application, add an assets section, like this:
   assets:
-    - assets/logo.png
-    - assets/cat_cardio.png
-    - assets/cat_legs.png
-    - assets/cat_arms.png
-    - assets/profile_image_empty.png
+    - assets/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

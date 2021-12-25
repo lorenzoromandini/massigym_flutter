@@ -9,15 +9,14 @@ import 'package:massigym_flutter/ui/common/bottomNavBar.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    /*
+      /*
     options: const FirebaseOptions(
       apiKey: "AIzaSyAKAV2o4YGcJNFnUbgdxN4cVzr9s2EUrSE", // Your apiKey
       appId: "XXX", // Your appId
       messagingSenderId: "XXX", // Your messagingSenderId
       projectId: "massigym-80757", // Your projectId
     ), */
-  );
-
+      );
   runApp(const MyApp());
 }
 
@@ -60,7 +59,7 @@ class _StartScreenState extends State<StartScreen> {
     });
   }
 
-  @override 
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,

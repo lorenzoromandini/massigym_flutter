@@ -7,9 +7,7 @@ class UserModel {
   // receiving data from server
   factory UserModel.fromMap(map) {
     return UserModel(
-      username: map["username"],
-      profileImageUrl: map["imageUrl"]
-    );
+        username: map["username"], profileImageUrl: map["imageUrl"]);
   }
 
   get email => null;

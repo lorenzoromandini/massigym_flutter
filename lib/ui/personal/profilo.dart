@@ -23,7 +23,6 @@ class _ProfiloState extends State<Profilo> {
   UserModel userModel = UserModel();
 
   String imageUrl = "";
-  int check = 0;
 
   @override
   void initState() {
@@ -38,7 +37,7 @@ class _ProfiloState extends State<Profilo> {
     });
   }
 
-  checkImageProfile() {}
+/*
 
   checkImage() async {
     var snapshot = await storage.ref().child("profileImage/${user!.email}");
@@ -48,8 +47,10 @@ class _ProfiloState extends State<Profilo> {
         imageUrl = downloadUrl;
       });
     }
+    print(userModel.profileImageUrl);
     return imageUrl;
   }
+  */
 
   uploadImage() async {
     final picker = ImagePicker();
@@ -148,9 +149,9 @@ class _ProfiloState extends State<Profilo> {
               SizedBox(
                 height: 250,
                 width: 400,
-                child: (checkImage() != "")
+                child: (userModel.profileImageUrl != "")
                     ? Image.network(
-                        imageUrl,
+                        userModel.profileImageUrl!,
                         fit: BoxFit.contain,
                       )
                     : Image.asset("assets/profile_image_empty.png",

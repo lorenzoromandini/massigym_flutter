@@ -75,13 +75,13 @@ class WorkoutDetails extends StatelessWidget {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(40, 20, 40, 40),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
+            children: <Widget>[
               SizedBox(
                 height: 250,
                 width: 400,
@@ -92,6 +92,9 @@ class WorkoutDetails extends StatelessWidget {
                       )
                     : Image.asset("assets/profile_image_empty.png",
                         fit: BoxFit.contain),
+              ),
+              SizedBox(
+                height: 50,
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),

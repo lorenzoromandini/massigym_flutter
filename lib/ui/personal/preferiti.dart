@@ -28,10 +28,20 @@ class _PreferitiState extends State<Preferiti> {
                     itemBuilder: (BuildContext context, int index) {
                       DocumentSnapshot data = snapshot.data!.docs[index];
                       return Card(
-                        child: ListTile(
-                          title: Text(data["name"]),
-                          subtitle: Text(data["category"]),
-                          leading: Image.asset("assets/logo.png"),
+                       child: ListTile(
+                      title: Text("${data["name"]}        ${data["duration"]}s"),
+                      subtitle: Text(data["user"]),
+                      leading: SizedBox(
+                        width: 120,
+                        height: 80,
+                        child: (data["imageUrl"] != "")
+                            ? Image.network(
+                                data["imageUrl"],
+                                fit: BoxFit.contain,
+                              )
+                            : Image.asset("assets/workout_empty.png",
+                                fit: BoxFit.contain),
+                      ),
                           trailing: Icon(Icons.arrow_forward_rounded),
                           onTap: () {
                             Navigator.push(

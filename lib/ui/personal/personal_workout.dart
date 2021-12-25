@@ -29,9 +29,20 @@ class _PersonalWorkoutState extends State<PersonalWorkout> {
                       DocumentSnapshot data = snapshot.data!.docs[index];
                       return Card(
                         child: ListTile(
-                          title: Text(data["name"]),
+                          title: Text(
+                              "${data["name"]}        ${data["duration"]}s"),
                           subtitle: Text(data["category"]),
-                          leading: Image.asset("assets/logo.png"),
+                          leading: SizedBox(
+                            width: 120,
+                            height: 80,
+                            child: (data["imageUrl"] != "")
+                                ? Image.network(
+                                    data["imageUrl"],
+                                    fit: BoxFit.contain,
+                                  )
+                                : Image.asset("assets/workout_empty.png",
+                                    fit: BoxFit.contain),
+                          ),
                           trailing: Icon(Icons.arrow_forward_rounded),
                           onTap: () {
                             Navigator.push(
