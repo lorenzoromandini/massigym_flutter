@@ -239,6 +239,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     UserModel userModel = UserModel();
 
     userModel.username = usernameController.text;
+    userModel.profileImageUrl = "";
 
     await firebaseFirestore
         .collection("users")

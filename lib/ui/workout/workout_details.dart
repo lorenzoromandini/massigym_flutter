@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:massigym_flutter/models/workout.dart';
 
 class WorkoutDetails extends StatelessWidget {
   DocumentSnapshot data;
@@ -80,10 +80,18 @@ class WorkoutDetails extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Image.asset(
-                "assets/logo.png",
-                height: 500,
+              SizedBox(
+                height: 250,
+                width: 400,
+                child: (data["imageUrl"] != "")
+                    ? Image.network(
+                        data["imageUrl"],
+                        fit: BoxFit.contain,
+                      )
+                    : Image.asset("assets/profile_image_empty.png",
+                        fit: BoxFit.contain),
               ),
               Padding(
                 padding: EdgeInsets.all(8.0),

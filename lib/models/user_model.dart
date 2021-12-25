@@ -1,12 +1,14 @@
 class UserModel {
   String? username;
+  String? profileImageUrl;
 
-  UserModel({this.username});
+  UserModel({this.username, this.profileImageUrl});
 
   // receiving data from server
   factory UserModel.fromMap(map) {
     return UserModel(
       username: map["username"],
+      profileImageUrl: map["imageUrl"]
     );
   }
 
@@ -16,6 +18,7 @@ class UserModel {
   Map<String, dynamic> toMap() {
     return {
       'username': username,
+      'imageUrl': profileImageUrl,
     };
   }
 }

@@ -18,8 +18,9 @@ class Profilo extends StatefulWidget {
 
 class _ProfiloState extends State<Profilo> {
   User? user = FirebaseAuth.instance.currentUser;
-  UserModel loggedInUser = UserModel();
   final storage = FirebaseStorage.instance;
+
+  UserModel userModel = UserModel();
 
   String imageUrl = "";
   int check = 0;
@@ -32,10 +33,12 @@ class _ProfiloState extends State<Profilo> {
         .doc(user!.email)
         .get()
         .then((value) {
-      loggedInUser = UserModel.fromMap(value.data());
+      userModel = UserModel.fromMap(value.data());
       setState(() {});
     });
   }
+
+  checkImageProfile() {}
 
   checkImage() async {
     var snapshot = await storage.ref().child("profileImage/${user!.email}");
@@ -71,6 +74,11 @@ class _ProfiloState extends State<Profilo> {
         setState(() {
           imageUrl = downloadUrl;
         });
+        userModel.profileImageUrl = imageUrl;
+        FirebaseFirestore.instance
+            .collection("users")
+            .doc(user!.email)
+            .update({"imageUrl": userModel.profileImageUrl});
       } else {
         print("No path received");
       }
@@ -102,6 +110,11 @@ class _ProfiloState extends State<Profilo> {
         setState(() {
           imageUrl = downloadUrl;
         });
+        userModel.profileImageUrl = imageUrl;
+        FirebaseFirestore.instance
+            .collection("users")
+            .doc(user!.email)
+            .update({"imageUrl": userModel.profileImageUrl});
       } else {
         print("No path received");
       }
@@ -154,7 +167,7 @@ class _ProfiloState extends State<Profilo> {
               ElevatedButton(
                   onPressed: () => shootImage(), child: Text("Shoot image")),
               const SizedBox(height: 40),
-              Text("${loggedInUser.username}",
+              Text("${userModel.username}",
                   style: TextStyle(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,

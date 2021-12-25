@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:massigym_flutter/models/workout.dart';
 import 'package:massigym_flutter/ui/common/bottomNavBar.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class AddWorkout extends StatefulWidget {
   AddWorkout({Key? key}) : super(key: key);
@@ -40,6 +45,9 @@ class _AddWorkoutState extends State<AddWorkout> {
     '600'
   ];
   String? durationValue;
+  final storage = FirebaseStorage.instance;
+  PickedFile? image;
+  final picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
@@ -70,35 +78,6 @@ class _AddWorkoutState extends State<AddWorkout> {
           )),
     );
 
-/*
-    // category field
-    final categoryField = TextFormField(
-      autofocus: false,
-      controller: categoryController,
-      keyboardType: TextInputType.name,
-      validator: (value) {
-        RegExp regexp = RegExp(r'^.{4,}$');
-        if (value!.isEmpty) {
-          return ("Category required");
-        }
-        if (!regexp.hasMatch(value)) {
-          return ("Please enter a valid category. (Min. 4 characters)");
-        }
-      },
-      onSaved: (value) {
-        categoryController.text = value!;
-      },
-      textInputAction: TextInputAction.next,
-      decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.account_circle),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Category",
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          )),
-    );
-    */
-
     DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
         value: item,
         child: Text(item,
@@ -111,9 +90,7 @@ class _AddWorkoutState extends State<AddWorkout> {
           border: Border.all(color: Colors.grey, width: 1)),
       child: DropdownButtonFormField<String>(
         hint: Text("Category"),
-        //   value: (categoryValue == 'null') ?  "Inserire categoria" : categoryValue,
         value: categoryValue,
-
         icon: Icon(Icons.arrow_drop_down, color: Colors.black),
         iconSize: 36,
         isExpanded: true,
@@ -155,35 +132,6 @@ class _AddWorkoutState extends State<AddWorkout> {
             borderRadius: BorderRadius.circular(10),
           )),
     );
-
-/*
-    // duration field
-    final durationField = TextFormField(
-      autofocus: false,
-      controller: durationController,
-      keyboardType: TextInputType.name,
-      validator: (value) {
-        RegExp regexp = RegExp(r'^.{2,}$');
-        if (value!.isEmpty) {
-          return ("Duration required");
-        }
-        if (!regexp.hasMatch(value)) {
-          return ("Please enter a valid duration. (Min. 2 characters)");
-        }
-      },
-      onSaved: (value) {
-        durationController.text = value!;
-      },
-      textInputAction: TextInputAction.done,
-      decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.account_circle),
-          contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Duration",
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(10),
-          )),
-    );
-    */
 
     final durationField = Container(
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
@@ -253,11 +201,17 @@ class _AddWorkoutState extends State<AddWorkout> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
                       SizedBox(
-                          height: 200,
-                          child: Image.asset(
-                            "assets/logo.png",
-                            fit: BoxFit.contain,
-                          )),
+                        height: 250,
+                        width: 400,
+                        child: Image.asset("assets/profile_image_empty.png",
+                            fit: BoxFit.contain),
+                      ),
+                      SizedBox(
+                        height: 50,
+                      ),
+                      ElevatedButton(
+                          onPressed: () => uploadImage(),
+                          child: Text("Upload image")),
                       const SizedBox(height: 45),
                       nameField,
                       const SizedBox(height: 45),
@@ -292,6 +246,7 @@ class _AddWorkoutState extends State<AddWorkout> {
       workoutModel.userMail = user!.email;
       workoutModel.favourites = [];
       workoutModel.ratings = [];
+      workoutModel.imageUrl = "";
 
       List<String> splitName = name.split(" ");
       workoutModel.searchKeyList = [];
@@ -308,11 +263,31 @@ class _AddWorkoutState extends State<AddWorkout> {
           .doc()
           .set(workoutModel.toMap());
 
+      image = await picker.getImage(source: ImageSource.gallery);
+      var file = File(image!.path);
+      var snapshot = await storage
+          .ref()
+          .child("${workoutModel.category}/${user.email}_${workoutModel.name}")
+          .putFile(file);
+
       Fluttertoast.showToast(msg: "Allenamento inserito con successo");
       Navigator.pushAndRemoveUntil(
           (context),
           MaterialPageRoute(builder: (context) => BottomNavBar()),
           (route) => false);
+    }
+  }
+
+  uploadImage() async {
+    // Check permission
+    await Permission.photos.request();
+
+    var permissionStatus = await Permission.photos.request();
+
+    if (permissionStatus.isGranted) {
+      // select image
+      image = await picker.getImage(source: ImageSource.gallery);
+      var file = File(image!.path);
     }
   }
 }
