@@ -61,6 +61,7 @@ flutter:
     - assets/cat_cardio.png
     - assets/cat_legs.png
     - assets/cat_arms.png
+    - assets/profile_image_empty.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
   # For details regarding adding assets from package dependencies, see

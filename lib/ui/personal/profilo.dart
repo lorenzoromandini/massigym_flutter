@@ -79,6 +79,37 @@ class _ProfiloState extends State<Profilo> {
     }
   }
 
+  shootImage() async {
+    final shooter = ImagePicker();
+    PickedFile? image;
+
+    // Check permission
+    await Permission.photos.request();
+
+    var permissionStatus = await Permission.photos.request();
+
+    if (permissionStatus.isGranted) {
+      // select image
+      image = await shooter.getImage(source: ImageSource.camera);
+      var file = File(image!.path);
+      if (image != "") {
+        // upload to firebase
+        var snapshot = await storage
+            .ref()
+            .child("profileImage/${user!.email}")
+            .putFile(file);
+        var downloadUrl = await snapshot.ref.getDownloadURL();
+        setState(() {
+          imageUrl = downloadUrl;
+        });
+      } else {
+        print("No path received");
+      }
+    } else {
+      print("Grant Permissioms and try again");
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -109,13 +140,19 @@ class _ProfiloState extends State<Profilo> {
                         imageUrl,
                         fit: BoxFit.contain,
                       )
-                    : Image.asset("assets/logo.png", fit: BoxFit.contain),
+                    : Image.asset("assets/profile_image_empty.png",
+                        fit: BoxFit.contain),
               ),
               SizedBox(
                 height: 50,
               ),
               ElevatedButton(
                   onPressed: () => uploadImage(), child: Text("Upload image")),
+              SizedBox(
+                height: 20,
+              ),
+              ElevatedButton(
+                  onPressed: () => shootImage(), child: Text("Shoot image")),
               const SizedBox(height: 40),
               Text("${loggedInUser.username}",
                   style: TextStyle(
