@@ -18,7 +18,7 @@ class _PersonalWorkoutState extends State<PersonalWorkout> {
       return StreamBuilder<QuerySnapshot>(
           stream: FirebaseFirestore.instance
               .collection(category!)
-              .where('user', isEqualTo: user!.email)
+              .where('userMail', isEqualTo: user!.email)
               .snapshots(),
           builder: (context, snapshot) {
             return (snapshot.connectionState == ConnectionState.waiting)

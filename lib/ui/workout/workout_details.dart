@@ -99,7 +99,7 @@ class WorkoutDetails extends StatelessWidget {
               Padding(
                 padding: EdgeInsets.all(8.0),
                 child: Text(
-                  data["user"],
+                  data["userName"],
                   textAlign: TextAlign.center,
                   style: TextStyle(fontStyle: FontStyle.italic),
                 ),

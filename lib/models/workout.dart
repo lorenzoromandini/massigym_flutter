@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class WorkoutModel {
   String? userMail;
+  String? userName;
   String? category;
   String? name;
   String? description;
@@ -19,12 +20,14 @@ class WorkoutModel {
       this.imageUrl,
       this.name,
       this.ratings,
-      this.userMail});
+      this.userMail,
+      this.userName});
 
   // receiving data from server
   factory WorkoutModel.fromMap(map) {
     return WorkoutModel(
-      userMail: map["user"],
+      userMail: map["userMail"],
+      userName: map["userName"],
       category: map["category"],
       name: map["name"],
       description: map["description"],
@@ -38,7 +41,8 @@ class WorkoutModel {
   // sending data to our server
   Map<String, dynamic> toMap() {
     return {
-      'user': userMail,
+      'userMail': userMail,
+      'userName': userName,
       'category': category,
       'name': name,
       'description': description,

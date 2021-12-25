@@ -20,7 +20,7 @@ Widget searchWorkout(String? category, String? name) {
                   return Card(
                     child: ListTile(
                       title: Text("${data["name"]}        ${data["duration"]}s"),
-                      subtitle: Text(data["user"]),
+                      subtitle: Text(data["userName"]),
                       leading: SizedBox(
                         width: 120,
                         height: 80,

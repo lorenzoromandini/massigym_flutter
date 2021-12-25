@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:massigym_flutter/models/user_model.dart';
 import 'package:massigym_flutter/models/workout.dart';
 import 'package:massigym_flutter/ui/common/bottomNavBar.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -203,14 +204,15 @@ class _AddWorkoutState extends State<AddWorkout> {
                       SizedBox(
                         height: 250,
                         width: 400,
-                        child: Image.asset("assets/profile_image_empty.png",
+                        child: Image.asset("assets/workout_empty.png",
                             fit: BoxFit.contain),
                       ),
                       SizedBox(
                         height: 50,
                       ),
                       ElevatedButton(
-                          onPressed: () => uploadImage(),
+                          onPressed: () {} // => uploadImage()
+                          ,
                           child: Text("Upload image")),
                       const SizedBox(height: 45),
                       nameField,
@@ -239,11 +241,18 @@ class _AddWorkoutState extends State<AddWorkout> {
       User? user = FirebaseAuth.instance.currentUser;
       WorkoutModel workoutModel = WorkoutModel();
 
+      var userDoc = await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user!.email)
+          .get();
+      var username = userDoc["username"];
+
       workoutModel.name = nameController.text;
       workoutModel.category = categoryValue;
       workoutModel.description = descriptionController.text;
       workoutModel.duration = durationValue;
-      workoutModel.userMail = user!.email;
+      workoutModel.userMail = user.email;
+      workoutModel.userName = username;
       workoutModel.favourites = [];
       workoutModel.ratings = [];
       workoutModel.imageUrl = "";
@@ -258,27 +267,60 @@ class _AddWorkoutState extends State<AddWorkout> {
         }
       }
 
-      await firebaseFirestore
-          .collection("${workoutModel.category}")
-          .doc()
-          .set(workoutModel.toMap());
+      final picker = ImagePicker();
+      PickedFile? image;
+      String imageUrl = "";
 
+      // Check permission
+      await Permission.photos.request();
+
+      var permissionStatus = await Permission.photos.request();
+
+      if (permissionStatus.isGranted) {
+        // select image
+        image = await picker.getImage(source: ImageSource.gallery);
+        var file = File(image!.path);
+        if (image != "") {
+          // upload to firebase
+          var snapshot = await storage
+              .ref()
+              .child(
+                  "${workoutModel.category}/${user.email}_${workoutModel.name}")
+              .putFile(file);
+          var downloadUrl = await snapshot.ref.getDownloadURL();
+          setState(() {
+            imageUrl = downloadUrl;
+          });
+          workoutModel.imageUrl = imageUrl;
+          FirebaseFirestore.instance
+              .collection(workoutModel.category!)
+              .doc()
+              .update({"imageUrl": workoutModel.imageUrl = imageUrl});
+
+          await firebaseFirestore
+              .collection("${workoutModel.category}")
+              .doc()
+              .set(workoutModel.toMap());
+
+          /*
       image = await picker.getImage(source: ImageSource.gallery);
       var file = File(image!.path);
       var snapshot = await storage
           .ref()
           .child("${workoutModel.category}/${user.email}_${workoutModel.name}")
           .putFile(file);
+          */
+        }
 
-      Fluttertoast.showToast(msg: "Allenamento inserito con successo");
-      Navigator.pushAndRemoveUntil(
-          (context),
-          MaterialPageRoute(builder: (context) => BottomNavBar()),
-          (route) => false);
-    }
-  }
+        Fluttertoast.showToast(msg: "Allenamento inserito con successo");
+        Navigator.pushAndRemoveUntil(
+            (context),
+            MaterialPageRoute(builder: (context) => BottomNavBar()),
+            (route) => false);
+      }
 
-  uploadImage() async {
+      /*
+  uploadImage1() async {
     // Check permission
     await Permission.photos.request();
 
@@ -288,6 +330,9 @@ class _AddWorkoutState extends State<AddWorkout> {
       // select image
       image = await picker.getImage(source: ImageSource.gallery);
       var file = File(image!.path);
+    }
+  }*/
+
     }
   }
 }
