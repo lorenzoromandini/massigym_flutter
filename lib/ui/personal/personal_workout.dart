@@ -67,6 +67,12 @@ class _PersonalWorkoutState extends State<PersonalWorkout> {
         appBar: AppBar(
           title: Text("I miei Workout"),
           elevation: 0,
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.red),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
         body: Column(children: <Widget>[
           Expanded(child: cardioList),

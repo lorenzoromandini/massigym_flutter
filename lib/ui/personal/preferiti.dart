@@ -31,7 +31,7 @@ class _PreferitiState extends State<Preferiti> {
                         child: ListTile(
                           title: Text(
                               "${data["name"]}        ${data["duration"]}s"),
-                          subtitle: Text(data["userName"]),
+                          subtitle: Text("${data["category"]}        ${data["userName"]}"),
                           leading: SizedBox(
                             width: 120,
                             height: 80,

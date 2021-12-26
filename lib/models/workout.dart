@@ -6,7 +6,7 @@ class WorkoutModel {
   String? category;
   String? name;
   String? description;
-  String? duration;
+  int? duration;
   String? imageUrl;
   List<String>? searchKeyList;
   List<String>? favourites;

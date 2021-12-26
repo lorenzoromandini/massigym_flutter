@@ -1,9 +1,12 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:massigym_flutter/ui/workout/workout_timer.dart';
 
 class WorkoutDetails extends StatelessWidget {
   DocumentSnapshot data;
@@ -93,7 +96,7 @@ class WorkoutDetails extends StatelessWidget {
                         data["imageUrl"],
                         fit: BoxFit.contain,
                       )
-                    : Image.asset("assets/profile_image_empty.png",
+                    : Image.asset("assets/workout_empty.png",
                         fit: BoxFit.contain),
               ),
               SizedBox(
@@ -114,7 +117,25 @@ class WorkoutDetails extends StatelessWidget {
                   textAlign: TextAlign.justify,
                   style: TextStyle(fontSize: 22.0),
                 ),
-              )
+              ),
+              SizedBox(
+                height: 50,
+              ),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.black,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 32, vertical: 16)),
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => WorkoutTimer(data: data)));
+                  },
+                  child: Text(
+                    "Timer",
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ))
             ],
           ),
         ),

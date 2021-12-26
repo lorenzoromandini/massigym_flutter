@@ -153,7 +153,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
 
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("Registrazione"),
         elevation: 0,
@@ -230,9 +229,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   void postDetailsToFirestore() async {
-    // calling our firestore
-    // calling our user model
-    // sending these values
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
 

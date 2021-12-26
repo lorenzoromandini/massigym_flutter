@@ -36,29 +36,30 @@ class _BottomNavBarState extends State<BottomNavBar> {
           physics: NeverScrollableScrollPhysics(),
         ),
         bottomNavigationBar: BottomNavigationBar(
+          backgroundColor: Colors.indigo,
           type: BottomNavigationBarType.fixed,
           onTap: _onItemTapped,
-          selectedItemColor: Colors.blue,
-          unselectedItemColor: Colors.grey,
+          selectedItemColor: Colors.amber,
+          unselectedItemColor: Colors.white,
           items: [
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.home,
-                color: _selectedIndex == 0 ? Colors.blue : Colors.grey,
+                color: _selectedIndex == 0 ? Colors.amber : Colors.white,
               ),
               label: "Home",
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.fitness_center,
-                color: _selectedIndex == 1 ? Colors.blue : Colors.grey,
+                color: _selectedIndex == 1 ? Colors.amber : Colors.white,
               ),
               label: "Workout",
             ),
             BottomNavigationBarItem(
               icon: Icon(
                 Icons.manage_accounts,
-                color: _selectedIndex == 2 ? Colors.blue : Colors.grey,
+                color: _selectedIndex == 2 ? Colors.amber : Colors.white,
               ),
               label: "Personale",
             ),

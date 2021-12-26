@@ -250,7 +250,7 @@ class _AddWorkoutState extends State<AddWorkout> {
       workoutModel.name = nameController.text;
       workoutModel.category = categoryValue;
       workoutModel.description = descriptionController.text;
-      workoutModel.duration = durationValue;
+      workoutModel.duration = int.parse(durationValue!);
       workoutModel.userMail = user.email;
       workoutModel.userName = username;
       workoutModel.favourites = [];
@@ -285,7 +285,7 @@ class _AddWorkoutState extends State<AddWorkout> {
           var snapshot = await storage
               .ref()
               .child(
-                  "${workoutModel.category}/${user.email}_${workoutModel.name}")
+                  "${workoutModel.category}/${user.email}_${workoutModel.name}_image")
               .putFile(file);
           var downloadUrl = await snapshot.ref.getDownloadURL();
           setState(() {
