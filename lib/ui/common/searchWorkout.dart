@@ -29,7 +29,7 @@ Widget searchWorkout(String? category, String? name) {
                                 data["imageUrl"],
                                 fit: BoxFit.contain,
                               )
-                            : Image.asset("assets/workout_empty.png",
+                            : Image.asset("assets/workout_image_empty.png",
                                 fit: BoxFit.contain),
                       ),
                       trailing: Icon(Icons.arrow_forward_rounded),

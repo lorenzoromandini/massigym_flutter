@@ -79,7 +79,15 @@ class _WorkoutTimerState extends State<WorkoutTimer> {
     return isRunning || !isCompleted
         ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             ButtonWidget(
-                text: isRunning ? "Pause" : "Resume",
+                icon: isRunning
+                    ? Icon(
+                        Icons.pause,
+                        color: Colors.amber,
+                      )
+                    : Icon(
+                        Icons.play_arrow,
+                        color: Colors.green,
+                      ),
                 onClicked: () {
                   if (isRunning) {
                     stopTimer(reset: false);
@@ -87,17 +95,18 @@ class _WorkoutTimerState extends State<WorkoutTimer> {
                     startTimer(reset: false);
                   }
                 }),
-            SizedBox(width: 20),
+            SizedBox(width: 40),
             ButtonWidget(
-                text: "Cancel",
+                icon: Icon(
+                  Icons.crop_square_rounded,
+                  color: Colors.red,
+                ),
                 onClicked: () {
                   stopTimer();
                 }),
           ])
         : ButtonWidget(
-            text: "Start Timer",
-            color: Colors.white,
-            backgroundColor: Colors.black,
+            icon: Icon(Icons.play_arrow, color: Colors.green,),
             onClicked: () {
               startTimer();
             },
@@ -111,9 +120,9 @@ class _WorkoutTimerState extends State<WorkoutTimer> {
       child: Stack(fit: StackFit.expand, children: [
         CircularProgressIndicator(
           value: durata! / widget.data["duration"],
-          strokeWidth: 12,
+          strokeWidth: 15,
           valueColor: AlwaysStoppedAnimation(Colors.white70),
-          backgroundColor: Colors.green,
+          backgroundColor: Colors.deepPurpleAccent,
         ),
         Center(
           child: buildTime(),
@@ -136,28 +145,25 @@ class _WorkoutTimerState extends State<WorkoutTimer> {
 }
 
 class ButtonWidget extends StatelessWidget {
-  final String text;
+  final Icon icon;
   final VoidCallback onClicked;
   final Color backgroundColor;
-  final Color color;
-  const ButtonWidget(
-      {Key? key,
-      required this.text,
-      required this.onClicked,
-      this.backgroundColor = Colors.black,
-      this.color = Colors.white})
-      : super(key: key);
+  const ButtonWidget({
+    Key? key,
+    required this.icon,
+    required this.onClicked,
+    this.backgroundColor = Colors.white,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      
         style: ElevatedButton.styleFrom(
+          elevation: 10,
             primary: backgroundColor,
             padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16)),
         onPressed: onClicked,
-        child: Text(
-          text,
-          style: TextStyle(fontSize: 20, color: color),
-        ));
+        child: icon);
   }
 }
