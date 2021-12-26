@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class WorkoutDetails extends StatelessWidget {
   DocumentSnapshot data;
@@ -58,8 +59,10 @@ class WorkoutDetails extends StatelessWidget {
             onPressed: () {
               if (!checkFavourite()) {
                 addFavourite();
+                Fluttertoast.showToast(msg: "Aggiunto ai Preferiti");
               } else {
                 removeFavourite();
+                Fluttertoast.showToast(msg: "Rimosso dai Preferiti");
               }
               Navigator.pop(context);
             },

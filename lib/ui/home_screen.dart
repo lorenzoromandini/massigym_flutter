@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:massigym_flutter/strings.dart';
 
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
@@ -11,117 +12,74 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(title: const Text("Home")),
-        body: Center(child: buildImageInteractionCard()));
+        body: SingleChildScrollView(
+            child: Column(children: [
+          buildCardText(),
+          buildCard("Cardio", Strings.cardioTopDescription,
+              Strings.cardioBottomDescription, Strings.cardioImageUrl),
+          buildCard("Legs", Strings.legsTopDescription,
+              Strings.legsBottomDescription, Strings.legsImageUrl),
+          buildCard("Arms", Strings.armsTopDescription,
+              Strings.armsBottomDescription, Strings.armsImageUrl)
+        ])));
   }
 
-  Widget buildCard() {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
+  Widget buildCardText() {
+    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      Padding(
+          padding: EdgeInsets.only(top: 20),
+          child: Text(
+            "Category",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+          ))
+    ]);
+  }
+
+  Widget buildCard(category, workout_top_description,
+      workout_bottom_description, workout_imageUrl) {
+    return Padding(
+        padding: EdgeInsets.all(20),
         child: Card(
-          clipBehavior: Clip.antiAlias,
-          elevation: 16,
-          child: InkWell(
-            onTap: () {},
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Stack(
-                  alignment: Alignment.bottomLeft,
-                  children: [
-                    Ink.image(
-                      height: 200,
-                      image: AssetImage('assets/cat_cardio.png'),
-                      fit: BoxFit.fitWidth,
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 16, top: 16, right: 16, bottom: 16),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        "Silk Spinners",
-                        style: TextStyle(color: Colors.black),
-                      ),
-                      Text("Paccaaa"),
-                      Text("Porcoooo, Diiiiii")
-                    ],
+            color: Colors.white,
+            clipBehavior: Clip.antiAlias,
+            elevation: 20,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+            child: Column(children: [
+              Stack(
+                children: [
+                  Ink.image(
+                    image: NetworkImage(workout_imageUrl),
+                    height: 240,
+                    fit: BoxFit.cover,
                   ),
-                ),
-                ButtonBar(),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildImageInteractionCard() {
-    return Card(
-      clipBehavior: Clip.antiAlias,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
-      ),
-      child: Column(
-        children: [
-          SizedBox(
-            child: Text(
-              "Porcoddio",
-              style: TextStyle(fontWeight: FontWeight.bold),
-              textAlign: TextAlign.start,
-            ),
-          ),
-          Stack(
-            children: [
-              Text("Pacca"),
-              Ink.image(
-                image: AssetImage('assets/cat_arms.png'),
-                height: 240,
-                fit: BoxFit.cover,
+                ],
               ),
-              Positioned(
-                bottom: 16,
-                right: 16,
-                left: 16,
-                child: Text(
-                  'Cats rule the world!',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    fontSize: 24,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Padding(
-            padding: EdgeInsets.all(16).copyWith(bottom: 0),
-            child: Text(
-              'The cat is the only domesticated species in the family Felidae and is often referred to as the domestic cat to distinguish it from the wild members of the family.',
-              style: TextStyle(fontSize: 16),
-            ),
-          ),
-          ButtonBar(
-            alignment: MainAxisAlignment.start,
-            children: [
-              FlatButton(
-                child: Text('Buy Cat'),
-                onPressed: () {},
-              ),
-              FlatButton(
-                child: Text('Buy Cat Food'),
-                onPressed: () {},
-              )
-            ],
-          )
-        ],
-      ),
-    );
+              Padding(
+                  padding: EdgeInsets.all(20).copyWith(bottom: 10),
+                  child: Column(children: [
+                    Row(children: [
+                      Text(category,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                              fontSize: 24))
+                    ]),
+                    SizedBox(height: 10),
+                    Text(
+                      workout_top_description,
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(height: 8),
+                    Text(
+                      workout_bottom_description,
+                      style: TextStyle(fontSize: 16),
+                    ),
+                    SizedBox(height: 8),
+                  ]))
+            ])));
   }
 }

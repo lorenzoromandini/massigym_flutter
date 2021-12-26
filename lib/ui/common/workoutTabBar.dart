@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:massigym_flutter/ui/workout/add_workout.dart';
 import 'package:massigym_flutter/ui/workout/arms.dart';
 import 'package:massigym_flutter/ui/workout/cardio.dart';

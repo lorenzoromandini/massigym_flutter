@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'massigym_flutter',
       theme: ThemeData(
-        primarySwatch: Colors.lightBlue,
+        primarySwatch: Colors.indigo,
       ),
       debugShowCheckedModeBanner: false,
       home: StartScreen(),
