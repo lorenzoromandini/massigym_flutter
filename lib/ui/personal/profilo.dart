@@ -142,7 +142,7 @@ class _ProfiloState extends State<Profilo> {
       ),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(40, 80, 40, 40),
+          padding: const EdgeInsets.fromLTRB(40, 70, 40, 40),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -159,35 +159,72 @@ class _ProfiloState extends State<Profilo> {
                         fit: BoxFit.contain),
               ),
               SizedBox(
-                height: 50,
+                height: 30,
               ),
-              ElevatedButton(
-                  onPressed: () => uploadImage(), child: Text("Upload image")),
+              Row(children: [
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.purple,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 18, vertical: 16)),
+                    onPressed: () => uploadImage(),
+                    child: Text(
+                      "Carica Immagine",
+                      style: TextStyle(fontSize: 15, color: Colors.white),
+                    )),
+                SizedBox(
+                  width: 12,
+                ),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.purple,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 36, vertical: 16)),
+                    onPressed: () => shootImage(),
+                    child: Text(
+                      "Scatta Foto",
+                      style: TextStyle(fontSize: 15, color: Colors.white),
+                    ))
+              ]),
+               SizedBox(height: 35),
+              Card(
+                  color: Colors.white,
+                  clipBehavior: Clip.antiAlias,
+                  elevation: 15,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16)),
+                  child: Column(children: [
+                    Padding(
+                        padding: EdgeInsets.all(20).copyWith(bottom: 10),
+                        child: Column(children: [
+                          Text(
+                            userModel.username!,
+                            style: TextStyle(fontSize: 26, fontStyle: FontStyle.italic, fontWeight: FontWeight.bold),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            user!.email!,
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
+                          ),
+                          SizedBox(height: 10),
+                        ]))
+                  ])),
               SizedBox(
-                height: 20,
+                height: 40,
               ),
               ElevatedButton(
-                  onPressed: () => shootImage(), child: Text("Shoot image")),
-              const SizedBox(height: 40),
-              Text("${userModel.username}",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  )),
-              Text("${user!.email}",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  )),
-              SizedBox(
-                height: 50,
-              ),
-              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.deepPurple,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 20, vertical: 22)),
                   onPressed: () => Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => ChangePassword())),
-                  child: Text("Change Password")),
+                  child: Text(
+                    "Modifica Password",
+                    style: TextStyle(fontSize: 15, color: Colors.white),
+                  )),
             ],
           ),
         ),
@@ -272,7 +309,7 @@ class _ChangePasswordState extends State<ChangePassword> {
     final changePasswordButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.redAccent,
+      color: Colors.deepPurple,
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -280,7 +317,7 @@ class _ChangePasswordState extends State<ChangePassword> {
           changePassword(passwordController.text);
         },
         child: const Text(
-          "Change Password",
+          "Modifica Password",
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
@@ -289,7 +326,7 @@ class _ChangePasswordState extends State<ChangePassword> {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text("Change Password"),
+        title: Text("Modifica Password"),
         elevation: 0,
       ),
       body: SingleChildScrollView(

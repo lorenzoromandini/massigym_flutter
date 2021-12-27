@@ -17,21 +17,19 @@ class _CardioState extends State<Cardio> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+          backgroundColor: Colors.deepPurple,
           title: Card(
-        child: TextField(
-          decoration: InputDecoration(
-              prefixIcon: Icon(Icons.search), hintText: "Search..."),
-          onChanged: (value) {
-            setState(() {
-              name = value;
-            });
-          },
-        ),
-      )),
+            child: TextField(
+              decoration: InputDecoration(
+                  prefixIcon: Icon(Icons.search), hintText: "Search..."),
+              onChanged: (value) {
+                setState(() {
+                  name = value;
+                });
+              },
+            ),
+          )),
       body: searchWorkout('cardio', name),
     );
   }
 }
-
-
-

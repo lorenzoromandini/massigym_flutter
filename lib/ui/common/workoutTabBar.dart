@@ -50,6 +50,7 @@ class _WorkoutTabBarState extends State<WorkoutTabBar>
         children: _screens,
       ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepPurple,
         child: Icon(Icons.add, size: 32),
         onPressed: () {
           Navigator.push(

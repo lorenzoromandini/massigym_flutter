@@ -156,7 +156,7 @@ class WorkoutDetails extends StatelessWidget {
                     ),
                     onPressed: () {} // => uploadImage()
                     ,
-                    child: Text("Download video")),
+                    child: Text("Download Video")),
               ],
             ),
           ),

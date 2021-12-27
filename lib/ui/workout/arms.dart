@@ -17,6 +17,7 @@ class _ArmsState extends State<Arms> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.deepPurple,
           title: Card(
         child: TextField(
           decoration: InputDecoration(
