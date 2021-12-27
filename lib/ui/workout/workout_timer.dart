@@ -66,7 +66,7 @@ class _WorkoutTimerState extends State<WorkoutTimer> {
             children: [
               SizedBox(height: 150),
               buildTimer(),
-              SizedBox(height: 50),
+              SizedBox(height: 60),
               buildButtons()
             ],
           ),
@@ -81,11 +81,11 @@ class _WorkoutTimerState extends State<WorkoutTimer> {
             ButtonWidget(
                 icon: isRunning
                     ? Icon(
-                        Icons.pause,
+                        Icons.pause_rounded,
                         color: Colors.amber,
                       )
                     : Icon(
-                        Icons.play_arrow,
+                        Icons.play_arrow_rounded,
                         color: Colors.green,
                       ),
                 onClicked: () {
@@ -106,7 +106,7 @@ class _WorkoutTimerState extends State<WorkoutTimer> {
                 }),
           ])
         : ButtonWidget(
-            icon: Icon(Icons.play_arrow, color: Colors.green,),
+            icon: Icon(Icons.play_arrow_rounded, color: Colors.green,),
             onClicked: () {
               startTimer();
             },

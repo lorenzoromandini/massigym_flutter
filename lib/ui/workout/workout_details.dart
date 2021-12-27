@@ -100,24 +100,33 @@ class WorkoutDetails extends StatelessWidget {
                           fit: BoxFit.contain),
                 ),
                 SizedBox(
-                  height: 50,
+                  height: 40,
                 ),
-                Padding(
-                  padding: EdgeInsets.all(8.0),
-                  child: Text(
-                    data["description"],
-                    textAlign: TextAlign.justify,
-                    style: TextStyle(fontSize: 22.0),
-                  ),
-                ),
+                Card(
+                    color: Colors.white,
+                    clipBehavior: Clip.antiAlias,
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16)),
+                    child: Column(children: [
+                      Padding(
+                          padding: EdgeInsets.all(20).copyWith(bottom: 10),
+                          child: Column(children: [
+                            Text(
+                              data["description"],
+                              style: TextStyle(fontSize: 16),
+                            ),
+                            SizedBox(height: 8),
+                          ]))
+                    ])),
                 SizedBox(
                   height: 50,
                 ),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.black,
+                        primary: Colors.deepPurple,
                         padding:
-                            EdgeInsets.symmetric(horizontal: 32, vertical: 16)),
+                            EdgeInsets.symmetric(horizontal: 38, vertical: 22)),
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -125,10 +134,10 @@ class WorkoutDetails extends StatelessWidget {
                               builder: (context) => WorkoutTimer(data: data)));
                     },
                     child: Text(
-                      "Timer",
+                      "Avvia",
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     )),
-                SizedBox(height: 50),
+                SizedBox(height: 30),
                 SizedBox(
                   height: 250,
                   width: 400,
@@ -141,6 +150,10 @@ class WorkoutDetails extends StatelessWidget {
                           fit: BoxFit.contain),
                 ),
                 ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 32, vertical: 18),
+                    ),
                     onPressed: () {} // => uploadImage()
                     ,
                     child: Text("Download video")),

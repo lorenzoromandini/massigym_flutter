@@ -16,7 +16,7 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(title: const Text("Home")),
         body: SingleChildScrollView(
             child: Column(children: [
-          buildCardText(),
+          buildCategory(),
           buildCard("Cardio", Strings.cardioTopDescription,
               Strings.cardioBottomDescription, Strings.cardioImageUrl),
           buildCard("Legs", Strings.legsTopDescription,
@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ])));
   }
 
-  Widget buildCardText() {
+  Widget buildCategory() {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Padding(
           padding: EdgeInsets.only(top: 20),
