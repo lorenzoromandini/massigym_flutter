@@ -34,10 +34,11 @@ class WorkoutDetails extends StatelessWidget {
     userFavourite.length = 1;
     userFavourite[0] = user!.email;
 
-    return FirebaseFirestore.instance
+    FirebaseFirestore.instance
         .collection(data["category"])
         .doc(data.id)
         .update({"favourites": FieldValue.arrayUnion(userFavourite)});
+    return Fluttertoast.showToast(msg: "Aggiunto ai Preferiti");
   }
 
   removeFavourite() {
@@ -45,14 +46,52 @@ class WorkoutDetails extends StatelessWidget {
     userFavourite.length = 1;
     userFavourite[0] = user!.email;
 
-    return FirebaseFirestore.instance
+    FirebaseFirestore.instance
         .collection(data["category"])
         .doc(data.id)
         .update({"favourites": FieldValue.arrayRemove(userFavourite)});
+    return Fluttertoast.showToast(msg: "Rimosso dai Preferiti");
+  }
+
+  deleteWorkout() {
+    FirebaseFirestore.instance
+        .collection(data["category"])
+        .doc(data.id)
+        .delete();
+    return Fluttertoast.showToast(msg: "Workout eliminato");
   }
 
   @override
   Widget build(BuildContext context) {
+    final timerButton = ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            primary: Colors.deepPurple,
+            padding: EdgeInsets.symmetric(horizontal: 38, vertical: 22)),
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => WorkoutTimer(data: data)));
+        },
+        child: Text(
+          "Timer",
+          style: TextStyle(fontSize: 20, color: Colors.white),
+        ));
+
+    final deleteWorkoutButton = ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          primary: Colors.red,
+          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12)),
+      onPressed: () {
+        deleteWorkout();
+        Navigator.pop(context);
+      },
+      child: Text(
+        "Elimina Workout",
+        style: TextStyle(fontSize: 20, color: Colors.white),
+      ),
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(data["name"]),
@@ -62,10 +101,8 @@ class WorkoutDetails extends StatelessWidget {
             onPressed: () {
               if (!checkFavourite()) {
                 addFavourite();
-                Fluttertoast.showToast(msg: "Aggiunto ai Preferiti");
               } else {
                 removeFavourite();
-                Fluttertoast.showToast(msg: "Rimosso dai Preferiti");
               }
               Navigator.pop(context);
             },
@@ -123,21 +160,7 @@ class WorkoutDetails extends StatelessWidget {
                 SizedBox(
                   height: 50,
                 ),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.deepPurple,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 38, vertical: 22)),
-                    onPressed: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => WorkoutTimer(data: data)));
-                    },
-                    child: Text(
-                      "Timer",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    )),
+                timerButton,
                 SizedBox(height: 40),
                 SizedBox(
                   height: 250,
@@ -163,6 +186,12 @@ class WorkoutDetails extends StatelessWidget {
                       : Image.asset("assets/workout_video_empty.png",
                           fit: BoxFit.contain),
                 ),
+                SizedBox(
+                  height: 50,
+                ),
+                (user!.email == data["userMail"])
+                    ? deleteWorkoutButton
+                    : Container()
               ],
             ),
           ),

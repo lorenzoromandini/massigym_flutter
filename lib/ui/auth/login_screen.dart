@@ -12,19 +12,13 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  // form key
   final _formKey = GlobalKey<FormState>();
 
-  // editing controller
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  // firebase
-  final _auth = FirebaseAuth.instance;
-
   @override
   Widget build(BuildContext context) {
-    // email field
     final emailField = TextFormField(
       autofocus: false,
       controller: emailController,
@@ -34,7 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
         if (value!.isEmpty) {
           return ("Email richiesta");
         }
-        // reg expression for email validation
         if (!regexp.hasMatch(value)) {
           return ("Immettere una Email valida");
         }
@@ -53,7 +46,6 @@ class _LoginScreenState extends State<LoginScreen> {
           )),
     );
 
-    // password field
     final passwordField = TextFormField(
       autofocus: false,
       controller: passwordController,
@@ -163,7 +155,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   void login(String email, String password) async {
     if (_formKey.currentState!.validate()) {
-      await _auth
+      await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password)
           .then((uid) => {
                 Fluttertoast.showToast(msg: "Login effettuato"),

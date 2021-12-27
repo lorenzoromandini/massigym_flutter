@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:massigym_flutter/strings.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:video_player/video_player.dart';
+import 'package:path_provider/path_provider.dart';
 
 class WorkoutVideo extends StatefulWidget {
   DocumentSnapshot data;
@@ -34,27 +38,64 @@ class _WorkoutVideoState extends State<WorkoutVideo> {
     super.dispose();
   }
 
+  downloadVideo() async {
+    Fluttertoast.showToast(msg: "Download avviato");
+    final appStorage = await getExternalStorageDirectory();
+    final file = File('${appStorage!.path}/${widget.data["name"]}.mp4');
+    final response = await Dio().get(widget.data["videoUrl"],
+        options: Options(
+            responseType: ResponseType.bytes,
+            followRedirects: false,
+            receiveTimeout: 0));
+
+    final raf = file.openSync(mode: FileMode.write);
+    raf.writeFromSync(response.data);
+    await raf.close();
+    return Fluttertoast.showToast(
+        msg: "Download completato: $file", toastLength: Toast.LENGTH_LONG);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final downloadButton = ElevatedButton(
+        style: ElevatedButton.styleFrom(
+            primary: Colors.deepPurple,
+            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 16)),
+        onPressed: () {
+          downloadVideo();
+        },
+        child: Text(
+          "Download Video",
+          style: TextStyle(fontSize: 20, color: Colors.white),
+        ));
+
     return Scaffold(
       appBar: AppBar(
         title: Text("${widget.data["name"]} - Video"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 100, 20, 10),
-        child: FutureBuilder(
-          future: initializeVideoPlayer,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return AspectRatio(
-                aspectRatio: controller!.value.aspectRatio,
-                child: VideoPlayer(controller!),
-              );
-            } else {
-              return Center(child: CircularProgressIndicator());
-            }
-          },
-        ),
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(20, 100, 20, 10),
+            child: FutureBuilder(
+              future: initializeVideoPlayer,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return AspectRatio(
+                    aspectRatio: controller!.value.aspectRatio,
+                    child: VideoPlayer(controller!),
+                  );
+                } else {
+                  return Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          downloadButton,
+        ],
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.deepPurple,

@@ -47,7 +47,7 @@ class _StartScreenState extends State<StartScreen> {
   @override
   void initState() {
     super.initState();
-    Timer(const Duration(milliseconds: 1400), () {
+    Timer(const Duration(milliseconds: 2000), () {
       var user = FirebaseAuth.instance.currentUser;
       if (user == null) {
         Navigator.of(context).pushReplacement(
@@ -67,7 +67,7 @@ class _StartScreenState extends State<StartScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Image.asset('assets/logo.png'),
+            Image.asset('assets/logo_start_screen.png'),
           ],
         ),
       ),

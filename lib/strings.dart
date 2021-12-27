@@ -23,7 +23,4 @@ class Strings {
 
   static const String armsImageUrl =
       "https://firebasestorage.googleapis.com/v0/b/massigym-80757.appspot.com/o/arms%2Fcat_arms.png?alt=media&token=2a5dbf6a-4d7c-4ce0-b94d-e149c486c688";
-
-  static const String videoUrl =
-      "https://firebasestorage.googleapis.com/v0/b/massigym-80757.appspot.com/o/arms%2Fpacca%40gmail.com_giampos_video?alt=media&token=008a2c1d-8e12-461d-86f4-a9d21f38d2c5";
 }

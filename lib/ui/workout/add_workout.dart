@@ -264,9 +264,9 @@ class _AddWorkoutState extends State<AddWorkout> {
     );
 
     final imageFileName =
-        imageFile != null ? basename(imageFile!.path) : "No file selected";
+        imageFile != null ? basename(imageFile!.path) : "Nessun file selezionato";
     final videoFileName =
-        videoFile != null ? basename(videoFile!.path) : "No file selected";
+        videoFile != null ? basename(videoFile!.path) : "Nessun file selezionato";
 
     final insertWorkoutButton = Material(
       elevation: 5,
