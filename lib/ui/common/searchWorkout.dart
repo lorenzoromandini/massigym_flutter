@@ -19,8 +19,9 @@ Widget searchWorkout(String? category, String? name) {
                   DocumentSnapshot data = snapshot.data!.docs[index];
                   return Card(
                     child: ListTile(
-                      title: Text("${data["name"]}        ${data["duration"]}s"),
-                      subtitle: Text(data["userName"]),
+                      title: Text(data["name"], style: TextStyle(fontWeight: FontWeight.w400),),
+                      subtitle: Text("${data["duration"]} s", style: TextStyle(color: Colors.blueGrey),),
+                      horizontalTitleGap: 0,
                       leading: SizedBox(
                         width: 120,
                         height: 80,
@@ -32,7 +33,10 @@ Widget searchWorkout(String? category, String? name) {
                             : Image.asset("assets/workout_image_empty.png",
                                 fit: BoxFit.contain),
                       ),
-                      trailing: Icon(Icons.arrow_forward_rounded),
+                      trailing: Icon(
+                        Icons.star,
+                        color: Colors.amberAccent,
+                      ),
                       onTap: () {
                         Navigator.push(
                             context,

@@ -39,7 +39,7 @@ class _WorkoutVideoState extends State<WorkoutVideo> {
   }
 
   downloadVideo() async {
-    Fluttertoast.showToast(msg: "Download avviato");
+    Fluttertoast.showToast(msg: "Download avviato...");
     final appStorage = await getExternalStorageDirectory();
     final file = File('${appStorage!.path}/${widget.data["name"]}.mp4');
     final response = await Dio().get(widget.data["videoUrl"],

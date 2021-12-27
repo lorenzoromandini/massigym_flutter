@@ -67,7 +67,7 @@ class _PersonaleScreenState extends State<PersonaleScreen> {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const Profilo()),
+            MaterialPageRoute(builder: (context) => Profilo()),
           );
         },
         child: const Text(

@@ -74,6 +74,7 @@ class _AddWorkoutState extends State<AddWorkout> {
     insertWorkout(String name, String category, String description,
         String duration) async {
       if (_formKey.currentState!.validate()) {
+                Fluttertoast.showToast(msg: "Inserimento Workout...");
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
         User? user = FirebaseAuth.instance.currentUser;
         WorkoutModel workoutModel = WorkoutModel();
