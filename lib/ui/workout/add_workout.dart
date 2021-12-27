@@ -1,15 +1,14 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:massigym_flutter/models/user_model.dart';
 import 'package:massigym_flutter/models/workout.dart';
 import 'package:massigym_flutter/ui/common/bottomNavBar.dart';
-import 'package:permission_handler/permission_handler.dart';
+import 'package:path/path.dart';
 
 class AddWorkout extends StatefulWidget {
   AddWorkout({Key? key}) : super(key: key);
@@ -47,11 +46,118 @@ class _AddWorkoutState extends State<AddWorkout> {
   ];
   String? durationValue;
   final storage = FirebaseStorage.instance;
-  PickedFile? image;
-  final picker = ImagePicker();
+  File? imageFile;
+  File? videoFile;
+
+  Future selectImage() async {
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+    if (result == null) return;
+    final path = result.files.single.path!;
+
+    setState(() {
+      imageFile = File(path);
+    });
+  }
+
+  Future selectVideo() async {
+    final result = await FilePicker.platform.pickFiles(allowMultiple: false);
+    if (result == null) return;
+    final path = result.files.single.path!;
+
+    setState(() {
+      videoFile = File(path);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    insertWorkout(String name, String category, String description,
+        String duration) async {
+      if (_formKey.currentState!.validate()) {
+        FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+        User? user = FirebaseAuth.instance.currentUser;
+        WorkoutModel workoutModel = WorkoutModel();
+
+        var userDoc = await FirebaseFirestore.instance
+            .collection("users")
+            .doc(user!.email)
+            .get();
+        var username = userDoc["username"];
+
+        workoutModel.name = nameController.text;
+        workoutModel.category = categoryValue;
+        workoutModel.description = descriptionController.text;
+        workoutModel.duration = int.parse(durationValue!);
+        workoutModel.userMail = user.email;
+        workoutModel.userName = username;
+        workoutModel.favourites = [];
+        workoutModel.ratings = [];
+        workoutModel.imageUrl = "";
+        workoutModel.videoUrl = "";
+
+        List<String> splitName = name.split(" ");
+        workoutModel.searchKeyList = [];
+
+        for (int i = 0; i < splitName.length; i++) {
+          for (int y = 1; y < splitName[i].length + 1; y++) {
+            workoutModel.searchKeyList!
+                .add(splitName[i].substring(0, y).toLowerCase());
+          }
+        }
+
+        String imageUrl = "";
+        String videoUrl = "";
+
+        if (imageFile != "") {
+          // upload to firebase
+          var snapshot = await storage
+              .ref()
+              .child(
+                  "${workoutModel.category}/${user.email}_${workoutModel.name}_image")
+              .putFile(imageFile!);
+          var downloadUrl = await snapshot.ref.getDownloadURL();
+          setState(() {
+            imageUrl = downloadUrl;
+          });
+        }
+
+        if (videoFile != "") {
+          // upload to firebase
+          var snapshot = await storage
+              .ref()
+              .child(
+                  "${workoutModel.category}/${user.email}_${workoutModel.name}_video")
+              .putFile(videoFile!);
+          var downloadUrl = await snapshot.ref.getDownloadURL();
+          setState(() {
+            videoUrl = downloadUrl;
+          });
+        }
+
+        workoutModel.imageUrl = imageUrl;
+        workoutModel.videoUrl = videoUrl;
+
+        FirebaseFirestore.instance
+            .collection(workoutModel.category!)
+            .doc()
+            .update({
+          "imageUrl": workoutModel.imageUrl = imageUrl,
+          "videoUrl": workoutModel.videoUrl = videoUrl
+        });
+
+        await firebaseFirestore
+            .collection("${workoutModel.category}")
+            .doc()
+            .set(workoutModel.toMap());
+
+        Fluttertoast.showToast(msg: "Allenamento inserito con successo");
+        Navigator.pushAndRemoveUntil(
+            (context),
+            MaterialPageRoute(builder: (context) => BottomNavBar()),
+            (route) => false);
+      }
+    }
+
     // name field
     final nameField = TextFormField(
       autofocus: false,
@@ -157,6 +263,11 @@ class _AddWorkoutState extends State<AddWorkout> {
       ),
     );
 
+    final imageFileName =
+        imageFile != null ? basename(imageFile!.path) : "No file selected";
+    final videoFileName =
+        videoFile != null ? basename(videoFile!.path) : "No file selected";
+
     final insertWorkoutButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
@@ -201,19 +312,19 @@ class _AddWorkoutState extends State<AddWorkout> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      SizedBox(
-                        height: 250,
-                        width: 400,
-                        child: Image.asset("assets/workout_empty.png",
-                            fit: BoxFit.contain),
+                      ButtonWidget(
+                        icon: Icons.attach_file,
+                        onClicked: selectImage,
+                        text: 'Seleziona Immagine',
                       ),
                       SizedBox(
-                        height: 50,
+                        height: 16,
                       ),
-                      ElevatedButton(
-                          onPressed: () {} // => uploadImage()
-                          ,
-                          child: Text("Upload image")),
+                      Text(
+                        imageFileName,
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
                       const SizedBox(height: 45),
                       nameField,
                       const SizedBox(height: 45),
@@ -223,8 +334,21 @@ class _AddWorkoutState extends State<AddWorkout> {
                       const SizedBox(height: 45),
                       durationField,
                       const SizedBox(height: 45),
-                      insertWorkoutButton,
+                      ButtonWidget(
+                        icon: Icons.attach_file,
+                        onClicked: selectVideo,
+                        text: 'Seleziona Video',
+                      ),
+                      SizedBox(
+                        height: 16,
+                      ),
+                      Text(
+                        videoFileName,
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold),
+                      ),
                       const SizedBox(height: 45),
+                      insertWorkoutButton,
                     ],
                   )),
             ),
@@ -233,106 +357,43 @@ class _AddWorkoutState extends State<AddWorkout> {
       ),
     );
   }
+}
 
-  void insertWorkout(
-      String name, String category, String description, String duration) async {
-    if (_formKey.currentState!.validate()) {
-      FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
-      User? user = FirebaseAuth.instance.currentUser;
-      WorkoutModel workoutModel = WorkoutModel();
+class ButtonWidget extends StatelessWidget {
+  final IconData icon;
+  final VoidCallback onClicked;
+  final String text;
+  const ButtonWidget({
+    Key? key,
+    required this.icon,
+    required this.onClicked,
+    required this.text,
+  }) : super(key: key);
 
-      var userDoc = await FirebaseFirestore.instance
-          .collection("users")
-          .doc(user!.email)
-          .get();
-      var username = userDoc["username"];
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary: Color.fromRGBO(29, 194, 95, 1),
+          minimumSize: Size.fromHeight(50),
+        ),
+        onPressed: onClicked,
+        child: buildContent());
+  }
 
-      workoutModel.name = nameController.text;
-      workoutModel.category = categoryValue;
-      workoutModel.description = descriptionController.text;
-      workoutModel.duration = int.parse(durationValue!);
-      workoutModel.userMail = user.email;
-      workoutModel.userName = username;
-      workoutModel.favourites = [];
-      workoutModel.ratings = [];
-      workoutModel.imageUrl = "";
-
-      List<String> splitName = name.split(" ");
-      workoutModel.searchKeyList = [];
-
-      for (int i = 0; i < splitName.length; i++) {
-        for (int y = 1; y < splitName[i].length + 1; y++) {
-          workoutModel.searchKeyList!
-              .add(splitName[i].substring(0, y).toLowerCase());
-        }
-      }
-
-      final picker = ImagePicker();
-      PickedFile? image;
-      String imageUrl = "";
-
-      // Check permission
-      await Permission.photos.request();
-
-      var permissionStatus = await Permission.photos.request();
-
-      if (permissionStatus.isGranted) {
-        // select image
-        image = await picker.getImage(source: ImageSource.gallery);
-        var file = File(image!.path);
-        if (image != "") {
-          // upload to firebase
-          var snapshot = await storage
-              .ref()
-              .child(
-                  "${workoutModel.category}/${user.email}_${workoutModel.name}_image")
-              .putFile(file);
-          var downloadUrl = await snapshot.ref.getDownloadURL();
-          setState(() {
-            imageUrl = downloadUrl;
-          });
-          workoutModel.imageUrl = imageUrl;
-          FirebaseFirestore.instance
-              .collection(workoutModel.category!)
-              .doc()
-              .update({"imageUrl": workoutModel.imageUrl = imageUrl});
-
-          await firebaseFirestore
-              .collection("${workoutModel.category}")
-              .doc()
-              .set(workoutModel.toMap());
-
-          /*
-      image = await picker.getImage(source: ImageSource.gallery);
-      var file = File(image!.path);
-      var snapshot = await storage
-          .ref()
-          .child("${workoutModel.category}/${user.email}_${workoutModel.name}")
-          .putFile(file);
-          */
-        }
-
-        Fluttertoast.showToast(msg: "Allenamento inserito con successo");
-        Navigator.pushAndRemoveUntil(
-            (context),
-            MaterialPageRoute(builder: (context) => BottomNavBar()),
-            (route) => false);
-      }
-
-      /*
-  uploadImage1() async {
-    // Check permission
-    await Permission.photos.request();
-
-    var permissionStatus = await Permission.photos.request();
-
-    if (permissionStatus.isGranted) {
-      // select image
-      image = await picker.getImage(source: ImageSource.gallery);
-      var file = File(image!.path);
-    }
-  }*/
-
-    }
+  Widget buildContent() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Icon(icon, size: 28),
+        SizedBox(
+          width: 16,
+        ),
+        Text(
+          text,
+          style: TextStyle(fontSize: 22, color: Colors.white),
+        )
+      ],
+    );
   }
 }

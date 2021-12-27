@@ -20,7 +20,7 @@ class _WorkoutTimerState extends State<WorkoutTimer> {
   void initState() {
     super.initState();
     setState(() {
-      durata = (widget.data["duration"]);
+      durata = widget.data["duration"];
     });
   }
 

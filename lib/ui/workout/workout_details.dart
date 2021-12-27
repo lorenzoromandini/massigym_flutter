@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:massigym_flutter/ui/workout/workout_timer.dart';
+import 'package:massigym_flutter/ui/workout/workout_video.dart';
 
 class WorkoutDetails extends StatelessWidget {
   DocumentSnapshot data;
@@ -134,29 +135,34 @@ class WorkoutDetails extends StatelessWidget {
                               builder: (context) => WorkoutTimer(data: data)));
                     },
                     child: Text(
-                      "Avvia",
+                      "Timer",
                       style: TextStyle(fontSize: 20, color: Colors.white),
                     )),
-                SizedBox(height: 30),
+                SizedBox(height: 40),
                 SizedBox(
                   height: 250,
                   width: 400,
                   child: (data["videoUrl"] != "")
-                      ? Image.network(
-                          data["videoUrl"],
-                          fit: BoxFit.contain,
-                        )
+                      ? Card(
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.grey,
+                              ),
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => WorkoutVideo(
+                                              data: data,
+                                            )));
+                              },
+                              child: Image.asset(
+                                "assets/workout_video_exists.jpg",
+                                fit: BoxFit.contain,
+                              )))
                       : Image.asset("assets/workout_video_empty.png",
                           fit: BoxFit.contain),
                 ),
-                ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 32, vertical: 18),
-                    ),
-                    onPressed: () {} // => uploadImage()
-                    ,
-                    child: Text("Download Video")),
               ],
             ),
           ),

@@ -123,13 +123,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             "assets/logo.png",
                             fit: BoxFit.contain,
                           )),
-                      const SizedBox(height: 45),
+                      const SizedBox(height: 40),
                       emailField,
-                      const SizedBox(height: 45),
+                      const SizedBox(height: 30),
                       passwordField,
-                      const SizedBox(height: 45),
+                      const SizedBox(height: 30),
                       loginButton,
-                      const SizedBox(height: 45),
+                      const SizedBox(height: 40),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[

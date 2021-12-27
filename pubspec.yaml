@@ -30,6 +30,7 @@ dependencies:
   catcher: ^0.6.9
   cloud_firestore: ^3.1.4
   cupertino_icons: ^1.0.2
+  file_picker: ^4.3.0
   firebase_auth: ^3.3.3
   firebase_core: ^1.10.5
   firebase_storage: ^10.2.4
@@ -42,6 +43,7 @@ dependencies:
   image_picker: ^0.8.4+4
   permission_handler: ^8.0.0
   shared_preferences: ^2.0.11
+  video_player: ^2.2.10
 
 dev_dependencies:
   flutter_lints: ^1.0.0
