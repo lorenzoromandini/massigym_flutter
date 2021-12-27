@@ -31,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
       Padding(
           padding: EdgeInsets.only(top: 20),
           child: Text(
-            "Category",
+            "Categorie",
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
           ))
     ]);

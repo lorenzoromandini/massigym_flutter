@@ -21,7 +21,7 @@ class _ArmsState extends State<Arms> {
           title: Card(
         child: TextField(
           decoration: InputDecoration(
-              prefixIcon: Icon(Icons.search), hintText: "Search..."),
+              prefixIcon: Icon(Icons.search), hintText: "Cerca..."),
           onChanged: (value) {
             setState(() {
               name = value;

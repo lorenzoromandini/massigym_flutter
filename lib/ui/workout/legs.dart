@@ -21,7 +21,7 @@ class _LegsState extends State<Legs> {
           title: Card(
             child: TextField(
               decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search), hintText: "Search..."),
+                  prefixIcon: Icon(Icons.search), hintText: "Cerca..."),
               onChanged: (value) {
                 setState(() {
                   name = value;

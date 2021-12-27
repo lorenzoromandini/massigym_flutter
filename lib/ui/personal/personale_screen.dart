@@ -16,7 +16,7 @@ class _PersonaleScreenState extends State<PersonaleScreen> {
     final personalWorkoutButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.redAccent,
+      color: Colors.purple,
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -38,7 +38,7 @@ class _PersonaleScreenState extends State<PersonaleScreen> {
     final preferitiButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.redAccent,
+      color: Colors.red,
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -60,7 +60,7 @@ class _PersonaleScreenState extends State<PersonaleScreen> {
     final profiloButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.redAccent,
+      color: Colors.deepPurple,
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -95,13 +95,11 @@ class _PersonaleScreenState extends State<PersonaleScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: <Widget>[
-                      const SizedBox(height: 45),
                       personalWorkoutButton,
-                      const SizedBox(height: 45),
+                      const SizedBox(height: 50),
                       preferitiButton,
-                      const SizedBox(height: 45),
+                      const SizedBox(height: 50),
                       profiloButton,
-                      const SizedBox(height: 45),
                     ]),
               ),
             ),

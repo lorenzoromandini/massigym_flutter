@@ -34,10 +34,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       validator: (value) {
         RegExp regexp = RegExp(r'^.{5,}$');
         if (value!.isEmpty) {
-          return ("Username required");
+          return ("Username richiesto");
         }
         if (!regexp.hasMatch(value)) {
-          return ("Please enter a valid username. (Min. 5 characters)");
+          return ("Immettere uno Username valido. (Min. 5 caratteri)");
         }
       },
       onSaved: (value) {
@@ -61,11 +61,11 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       validator: (value) {
         RegExp regexp = RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]");
         if (value!.isEmpty) {
-          return ("Please enter your email");
+          return ("Email richiesta");
         }
         // reg expression for email validation
         if (!regexp.hasMatch(value)) {
-          return ("Please enter a valid email");
+          return ("Immettere una Email valida ");
         }
         return null;
       },
@@ -90,10 +90,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       validator: (value) {
         RegExp regexp = RegExp(r'^.{6,}$');
         if (value!.isEmpty) {
-          return ("Password required");
+          return ("Password richiesta");
         }
         if (!regexp.hasMatch(value)) {
-          return ("Please enter a valid password. (Min. 6 characters)");
+          return ("Immettere una Password valida. (Min. 6 caratteri)");
         }
       },
       onSaved: (value) {
@@ -116,7 +116,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       obscureText: true,
       validator: (value) {
         if (confermaPasswordController.text != passwordController.text) {
-          return "Password don't match";
+          return "Le Password non coincidono";
         }
         return null;
       },
@@ -136,7 +136,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     final signUpButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.redAccent,
+      color: Colors.deepPurple,
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -175,21 +175,21 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             "assets/logo.png",
                             fit: BoxFit.contain,
                           )),
-                      const SizedBox(height: 45),
+                      const SizedBox(height: 40),
                       usernameField,
-                      const SizedBox(height: 45),
+                      const SizedBox(height: 30),
                       emailField,
-                      const SizedBox(height: 45),
+                      const SizedBox(height: 30),
                       passwordField,
-                      const SizedBox(height: 45),
+                      const SizedBox(height: 30),
                       confermaPasswordField,
-                      const SizedBox(height: 45),
+                      const SizedBox(height: 30),
                       signUpButton,
-                      const SizedBox(height: 45),
+                      const SizedBox(height: 40),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          const Text("Sei già registrato?"),
+                          const Text("Sei già registrato? "),
                           GestureDetector(
                             onTap: () {
                               Navigator.pushReplacement(
@@ -201,7 +201,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                             child: const Text(
                               "Torna al Login",
                               style: TextStyle(
-                                  color: Colors.redAccent,
+                                  color: Colors.deepPurpleAccent,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15),
                             ),

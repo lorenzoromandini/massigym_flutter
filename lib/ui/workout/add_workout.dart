@@ -60,10 +60,10 @@ class _AddWorkoutState extends State<AddWorkout> {
       validator: (value) {
         RegExp regexp = RegExp(r'^.{2,}$');
         if (value!.isEmpty) {
-          return ("Name required");
+          return ("Nome richiesto");
         }
         if (!regexp.hasMatch(value)) {
-          return ("Please enter a valid name. (Min. 2 characters)");
+          return ("Immetti un Nome valido. (Min. 2 caratteri)");
         }
       },
       onSaved: (value) {
@@ -73,7 +73,7 @@ class _AddWorkoutState extends State<AddWorkout> {
       decoration: InputDecoration(
           prefixIcon: const Icon(Icons.account_circle),
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Name",
+          hintText: "Nome",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -90,7 +90,7 @@ class _AddWorkoutState extends State<AddWorkout> {
           borderRadius: BorderRadius.circular(12),
           border: Border.all(color: Colors.grey, width: 1)),
       child: DropdownButtonFormField<String>(
-        hint: Text("Category"),
+        hint: Text("Categoria"),
         value: categoryValue,
         icon: Icon(Icons.arrow_drop_down, color: Colors.black),
         iconSize: 36,
@@ -101,7 +101,7 @@ class _AddWorkoutState extends State<AddWorkout> {
         }),
         validator: (value) {
           if (value!.isEmpty) {
-            return 'Please enter a category';
+            return 'Categoria richiesta';
           }
         },
       ),
@@ -115,10 +115,10 @@ class _AddWorkoutState extends State<AddWorkout> {
       validator: (value) {
         RegExp regexp = RegExp(r'^.{15,}$');
         if (value!.isEmpty) {
-          return ("Description required");
+          return ("Descrizione richiesta");
         }
         if (!regexp.hasMatch(value)) {
-          return ("Please enter a valid description. (Min. 15 characters)");
+          return ("Immetti una Descrizione valida. (Min. 15 caratteri)");
         }
       },
       onSaved: (value) {
@@ -128,7 +128,7 @@ class _AddWorkoutState extends State<AddWorkout> {
       decoration: InputDecoration(
           prefixIcon: const Icon(Icons.account_circle),
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Desciption",
+          hintText: "Descrizione",
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -151,7 +151,7 @@ class _AddWorkoutState extends State<AddWorkout> {
         }),
         validator: (value) {
           if (value!.isEmpty) {
-            return 'Please enter a valid duration';
+            return 'Durata richiesta';
           }
         },
       ),
@@ -169,7 +169,7 @@ class _AddWorkoutState extends State<AddWorkout> {
               descriptionController.text, durationController.text);
         },
         child: const Text(
-          "Inserisci",
+          "Inserisci Workout",
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),

@@ -32,11 +32,11 @@ class _LoginScreenState extends State<LoginScreen> {
       validator: (value) {
         RegExp regexp = RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]");
         if (value!.isEmpty) {
-          return ("Please enter your email");
+          return ("Email richiesta");
         }
         // reg expression for email validation
         if (!regexp.hasMatch(value)) {
-          return ("Please enter a valid email");
+          return ("Immettere una Email valida");
         }
         return null;
       },
@@ -61,10 +61,10 @@ class _LoginScreenState extends State<LoginScreen> {
       validator: (value) {
         RegExp regexp = RegExp(r'^.{6,}$');
         if (value!.isEmpty) {
-          return ("Password required");
+          return ("Password richiesta");
         }
         if (!regexp.hasMatch(value)) {
-          return ("Please enter a valid password. (Min. 6 characters)");
+          return ("Immettere una Password valida. (Min. 6 caratteri)");
         }
       },
       onSaved: (value) {
@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
     final loginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.redAccent,
+      color: Colors.deepPurple,
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -133,7 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          const Text("Non sei ancora registrato?"),
+                          const Text("Non sei ancora registrato? "),
                           GestureDetector(
                             onTap: () {
                               Navigator.pushReplacement(
@@ -145,7 +145,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: const Text(
                               "Registrati",
                               style: TextStyle(
-                                  color: Colors.redAccent,
+                                  color: Colors.deepPurpleAccent,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15),
                             ),
@@ -166,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
       await _auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((uid) => {
-                Fluttertoast.showToast(msg: "Login successful"),
+                Fluttertoast.showToast(msg: "Login effettuato"),
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => BottomNavBar()))
               })
