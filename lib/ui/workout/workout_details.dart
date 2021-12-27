@@ -154,6 +154,13 @@ class WorkoutDetails extends StatelessWidget {
                               data["description"],
                               style: TextStyle(fontSize: 16),
                             ),
+                            SizedBox(height: 20),
+                            Text(
+                              "- ${data["userName"]}",
+                              style: TextStyle(
+                                  fontStyle: FontStyle.italic,
+                                  fontWeight: FontWeight.w600),
+                            ),
                             SizedBox(height: 8),
                           ]))
                     ])),

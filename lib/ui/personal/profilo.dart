@@ -117,7 +117,7 @@ class _ProfiloState extends State<Profilo> {
       width: 400,
       child: (userModel.profileImageUrl != "")
           ? Image.network(
-              userModel.profileImageUrl!,
+              "${userModel.profileImageUrl}",
               fit: BoxFit.contain,
             )
           : Image.asset("assets/profile_image_empty.png", fit: BoxFit.contain),
@@ -151,7 +151,7 @@ class _ProfiloState extends State<Profilo> {
               padding: EdgeInsets.all(20).copyWith(bottom: 10),
               child: Column(children: [
                 Text(
-                  userModel.username!,
+                  "${userModel.username}",
                   style: TextStyle(
                       fontSize: 26,
                       fontStyle: FontStyle.italic,

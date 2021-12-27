@@ -74,7 +74,7 @@ class _AddWorkoutState extends State<AddWorkout> {
     insertWorkout(String name, String category, String description,
         String duration) async {
       if (_formKey.currentState!.validate()) {
-                Fluttertoast.showToast(msg: "Inserimento Workout...");
+        Fluttertoast.showToast(msg: "Inserimento Workout...");
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
         User? user = FirebaseAuth.instance.currentUser;
         WorkoutModel workoutModel = WorkoutModel();
@@ -159,7 +159,6 @@ class _AddWorkoutState extends State<AddWorkout> {
       }
     }
 
-    // name field
     final nameField = TextFormField(
       autofocus: false,
       controller: nameController,
@@ -214,7 +213,6 @@ class _AddWorkoutState extends State<AddWorkout> {
       ),
     );
 
-    // description field
     final descriptionField = TextFormField(
       autofocus: false,
       controller: descriptionController,
@@ -264,15 +262,11 @@ class _AddWorkoutState extends State<AddWorkout> {
       ),
     );
 
-    final imageFileName =
-        imageFile != null ? basename(imageFile!.path) : "Nessun file selezionato";
-    final videoFileName =
-        videoFile != null ? basename(videoFile!.path) : "Nessun file selezionato";
 
     final insertWorkoutButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
-      color: Colors.redAccent,
+      color: Colors.pink,
       child: MaterialButton(
         padding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
         minWidth: MediaQuery.of(context).size.width,
@@ -289,17 +283,19 @@ class _AddWorkoutState extends State<AddWorkout> {
       ),
     );
 
+
+    final imageFileName = imageFile != null
+        ? basename(imageFile!.path)
+        : "Nessun file selezionato";
+    final videoFileName = videoFile != null
+        ? basename(videoFile!.path)
+        : "Nessun file selezionato";
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("Inserisci Workout"),
         elevation: 0,
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.red),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -375,7 +371,7 @@ class ButtonWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Color.fromRGBO(29, 194, 95, 1),
+          primary: Colors.deepPurple,
           minimumSize: Size.fromHeight(50),
         ),
         onPressed: onClicked,
