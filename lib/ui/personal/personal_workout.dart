@@ -14,53 +14,46 @@ class _PersonalWorkoutState extends State<PersonalWorkout> {
   User? user = FirebaseAuth.instance.currentUser;
   @override
   Widget build(BuildContext context) {
-    Widget workoutList(String? category) {
-      return StreamBuilder<QuerySnapshot>(
-          stream: FirebaseFirestore.instance
-              .collection(category!)
-              .where('userMail', isEqualTo: user!.email)
-              .snapshots(),
-          builder: (context, snapshot) {
-            return (snapshot.connectionState == ConnectionState.waiting)
-                ? Center(child: CircularProgressIndicator())
-                : ListView.builder(
-                    itemCount: snapshot.data!.docs.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      DocumentSnapshot data = snapshot.data!.docs[index];
-                      return Card(
-                        child: ListTile(
-                          title: Text(
-                              "${data["name"]}        ${data["duration"]}s"),
-                          subtitle: Text(data["category"]),
-                          leading: SizedBox(
-                            width: 120,
-                            height: 80,
-                            child: (data["imageUrl"] != "")
-                                ? Image.network(
-                                    data["imageUrl"],
-                                    fit: BoxFit.contain,
-                                  )
-                                : Image.asset("assets/workout_image_empty.png",
-                                    fit: BoxFit.contain),
-                          ),
-                          trailing: Icon(Icons.arrow_forward_rounded),
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        WorkoutDetails(data)));
-                          },
+    final workoutList = StreamBuilder<QuerySnapshot>(
+        stream: FirebaseFirestore.instance
+            .collection("workouts")
+            .where('userMail', isEqualTo: user!.email)
+            .snapshots(),
+        builder: (context, snapshot) {
+          return (snapshot.connectionState == ConnectionState.waiting)
+              ? Center(child: CircularProgressIndicator())
+              : ListView.builder(
+                  itemCount: snapshot.data!.docs.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    DocumentSnapshot data = snapshot.data!.docs[index];
+                    return Card(
+                      child: ListTile(
+                        title:
+                            Text("${data["name"]}        ${data["duration"]}s"),
+                        subtitle: Text(data["category"]),
+                        leading: SizedBox(
+                          width: 120,
+                          height: 80,
+                          child: (data["imageUrl"] != "")
+                              ? Image.network(
+                                  data["imageUrl"],
+                                  fit: BoxFit.contain,
+                                )
+                              : Image.asset("assets/workout_image_empty.png",
+                                  fit: BoxFit.contain),
                         ),
-                      );
-                    },
-                  );
-          });
-    }
-
-    final armsList = workoutList('arms');
-    final cardioList = workoutList('cardio');
-    final legsList = workoutList('legs');
+                        trailing: Icon(Icons.arrow_forward_rounded),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => WorkoutDetails(data)));
+                        },
+                      ),
+                    );
+                  },
+                );
+        });
 
     return Scaffold(
         backgroundColor: Colors.white,
@@ -68,10 +61,6 @@ class _PersonalWorkoutState extends State<PersonalWorkout> {
           title: Text("I miei Workout"),
           elevation: 0,
         ),
-        body: Column(children: <Widget>[
-          Expanded(child: cardioList),
-          Expanded(child: legsList),
-          Expanded(child: armsList),
-        ]));
+        body: workoutList);
   }
 }

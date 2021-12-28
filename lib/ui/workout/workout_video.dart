@@ -39,7 +39,7 @@ class _WorkoutVideoState extends State<WorkoutVideo> {
   }
 
   downloadVideo() async {
-    Fluttertoast.showToast(msg: "Download avviato...");
+    Fluttertoast.showToast(msg: "Download avviato");
     final appStorage = await getExternalStorageDirectory();
     final file = File('${appStorage!.path}/${widget.data["name"]}.mp4');
     final response = await Dio().get(widget.data["videoUrl"],
@@ -47,6 +47,7 @@ class _WorkoutVideoState extends State<WorkoutVideo> {
             responseType: ResponseType.bytes,
             followRedirects: false,
             receiveTimeout: 0));
+    Fluttertoast.showToast(msg: "Download in corso...");
 
     final raf = file.openSync(mode: FileMode.write);
     raf.writeFromSync(response.data);
@@ -73,32 +74,37 @@ class _WorkoutVideoState extends State<WorkoutVideo> {
       appBar: AppBar(
         title: Text("${widget.data["name"]} - Video"),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.fromLTRB(20, 100, 20, 10),
-            child: FutureBuilder(
-              future: initializeVideoPlayer,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  return AspectRatio(
-                    aspectRatio: controller!.value.aspectRatio,
-                    child: VideoPlayer(controller!),
-                  );
-                } else {
-                  return Center(child: CircularProgressIndicator());
-                }
-              },
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(20, 100, 20, 10),
+              child: FutureBuilder(
+                future: initializeVideoPlayer,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    return AspectRatio(
+                      aspectRatio: controller!.value.aspectRatio,
+                      child: VideoPlayer(controller!),
+                    );
+                  } else {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
             ),
-          ),
-          SizedBox(
-            height: 30,
-          ),
-          downloadButton,
-        ],
+            SizedBox(
+              height: 30,
+            ),
+            downloadButton,
+            SizedBox(
+              height: 40,
+            ),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.deepPurpleAccent,
         onPressed: () {
           setState(() {
             if (controller!.value.isPlaying) {

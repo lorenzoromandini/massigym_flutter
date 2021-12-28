@@ -11,7 +11,7 @@ class WorkoutModel {
   String? videoUrl;
   List<String>? searchKeyList;
   List<String>? favourites;
-  List<Map<String, int>>? ratings;
+  List<String>? likes;
 
   WorkoutModel(
       {this.category,
@@ -21,7 +21,7 @@ class WorkoutModel {
       this.imageUrl,
       this.videoUrl,
       this.name,
-      this.ratings,
+      this.likes,
       this.userMail,
       this.userName});
 
@@ -37,7 +37,7 @@ class WorkoutModel {
       imageUrl: map["imageUrl"],
       videoUrl: map["videoUrl"],
       favourites: map["favourites"] == null ? null : map["favourites"],
-      ratings: map["ratings"] == null ? null : map["ratings"],
+      likes: map["likes"] == null ? null : map["likes"],
     );
   }
 
@@ -53,7 +53,7 @@ class WorkoutModel {
       'imageUrl': imageUrl,
       'videoUrl': videoUrl,
       'favourites': favourites,
-      'ratings': ratings,
+      'likes': likes,
       'searchKeywords': searchKeyList
     };
   }

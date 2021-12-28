@@ -74,7 +74,9 @@ class _AddWorkoutState extends State<AddWorkout> {
     insertWorkout(String name, String category, String description,
         String duration) async {
       if (_formKey.currentState!.validate()) {
-        Fluttertoast.showToast(msg: "Inserimento Workout...");
+        Fluttertoast.showToast(
+            msg: "Inserimento Workout avviato", toastLength: Toast.LENGTH_LONG);
+
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
         User? user = FirebaseAuth.instance.currentUser;
         WorkoutModel workoutModel = WorkoutModel();
@@ -92,7 +94,7 @@ class _AddWorkoutState extends State<AddWorkout> {
         workoutModel.userMail = user.email;
         workoutModel.userName = username;
         workoutModel.favourites = [];
-        workoutModel.ratings = [];
+        workoutModel.likes = [];
         workoutModel.imageUrl = "";
         workoutModel.videoUrl = "";
 
@@ -138,20 +140,22 @@ class _AddWorkoutState extends State<AddWorkout> {
         workoutModel.imageUrl = imageUrl;
         workoutModel.videoUrl = videoUrl;
 
-        FirebaseFirestore.instance
-            .collection(workoutModel.category!)
-            .doc()
-            .update({
+        Fluttertoast.showToast(
+            msg: "Inserimento Workout in corso...",
+            toastLength: Toast.LENGTH_LONG);
+
+        FirebaseFirestore.instance.collection("workouts").doc().update({
           "imageUrl": workoutModel.imageUrl = imageUrl,
           "videoUrl": workoutModel.videoUrl = videoUrl
         });
 
         await firebaseFirestore
-            .collection("${workoutModel.category}")
+            .collection("workouts")
             .doc()
             .set(workoutModel.toMap());
 
         Fluttertoast.showToast(msg: "Allenamento inserito con successo");
+
         Navigator.pushAndRemoveUntil(
             (context),
             MaterialPageRoute(builder: (context) => BottomNavBar()),
@@ -262,7 +266,6 @@ class _AddWorkoutState extends State<AddWorkout> {
       ),
     );
 
-
     final insertWorkoutButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
@@ -282,7 +285,6 @@ class _AddWorkoutState extends State<AddWorkout> {
         ),
       ),
     );
-
 
     final imageFileName = imageFile != null
         ? basename(imageFile!.path)
