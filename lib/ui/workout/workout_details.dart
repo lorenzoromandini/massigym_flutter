@@ -274,6 +274,8 @@ class WorkoutDetails extends StatelessWidget {
                 SizedBox(
                   height: 50,
                 ),
+                // il bottone per eliminare l'allenamento è mostrato solo all'utente che lo
+                // ha creato e all'utente "admin"
                 (user!.email == data["userMail"] ||
                         user!.email == "admin@gmail.com")
                     ? deleteWorkoutButton
