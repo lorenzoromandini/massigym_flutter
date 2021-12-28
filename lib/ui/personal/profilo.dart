@@ -4,8 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:massigym_flutter/models/user_model.dart';
+import 'package:massigym_flutter/strings.dart';
 import 'package:massigym_flutter/ui/auth/login_screen.dart';
 import 'package:massigym_flutter/ui/personal/change_password.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -78,17 +80,14 @@ class _ProfiloState extends State<Profilo> {
     final shooter = ImagePicker();
     PickedFile? image;
 
-    // Check permission
     await Permission.photos.request();
 
     var permissionStatus = await Permission.photos.request();
 
     if (permissionStatus.isGranted) {
-      // select image
       image = await shooter.getImage(source: ImageSource.camera);
       var file = File(image!.path);
       if (image != "") {
-        // upload to firebase
         var snapshot = await storage
             .ref()
             .child("profileImage/${user!.email}")
@@ -103,10 +102,10 @@ class _ProfiloState extends State<Profilo> {
             .doc(user!.email)
             .update({"imageUrl": userModel.profileImageUrl});
       } else {
-        print("Nessun path ricevuto");
+        Fluttertoast.showToast(msg: Strings.noPathReceived);
       }
     } else {
-      print("Concedi i permessi e riprova");
+      Fluttertoast.showToast(msg: Strings.grantPermissions);
     }
   }
 
@@ -173,7 +172,7 @@ class _ProfiloState extends State<Profilo> {
         onPressed: () => Navigator.push(
             context, MaterialPageRoute(builder: (context) => ChangePassword())),
         child: Text(
-          "Modifica Password",
+          Strings.changePassword,
           style: TextStyle(fontSize: 15, color: Colors.white),
         ));
 

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:massigym_flutter/strings.dart';
 import 'package:massigym_flutter/ui/common/bottomNavBar.dart';
 import 'package:massigym_flutter/ui/auth/registration_screen.dart';
 
@@ -26,10 +27,10 @@ class _LoginScreenState extends State<LoginScreen> {
       validator: (value) {
         RegExp regexp = RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]");
         if (value!.isEmpty) {
-          return ("Email richiesta");
+          return (Strings.emailRequired);
         }
         if (!regexp.hasMatch(value)) {
-          return ("Immettere una Email valida");
+          return (Strings.emailInvalid);
         }
         return null;
       },
@@ -53,10 +54,10 @@ class _LoginScreenState extends State<LoginScreen> {
       validator: (value) {
         RegExp regexp = RegExp(r'^.{6,}$');
         if (value!.isEmpty) {
-          return ("Password richiesta");
+          return (Strings.passwordRequired);
         }
         if (!regexp.hasMatch(value)) {
-          return ("Immettere una Password valida. (Min. 6 caratteri)");
+          return (Strings.passwordInvalid);
         }
       },
       onSaved: (value) {
@@ -125,7 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          const Text("Non sei ancora registrato? "),
+                          const Text(Strings.notRegisteredYet),
                           GestureDetector(
                             onTap: () {
                               Navigator.pushReplacement(
@@ -158,7 +159,7 @@ class _LoginScreenState extends State<LoginScreen> {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password)
           .then((uid) => {
-                Fluttertoast.showToast(msg: "Login effettuato"),
+                Fluttertoast.showToast(msg: Strings.loginDone),
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => BottomNavBar()))
               })

@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:massigym_flutter/models/user_model.dart';
+import 'package:massigym_flutter/strings.dart';
 import 'package:massigym_flutter/ui/auth/login_screen.dart';
 
 class RegistrationScreen extends StatefulWidget {
@@ -15,9 +16,7 @@ class RegistrationScreen extends StatefulWidget {
 class _RegistrationScreenState extends State<RegistrationScreen> {
   final _auth = FirebaseAuth.instance;
 
-  // form key
   final _formKey = GlobalKey<FormState>();
-  // editing controller
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
@@ -26,7 +25,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // username field
     final usernameField = TextFormField(
       autofocus: false,
       controller: usernameController,
@@ -34,10 +32,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       validator: (value) {
         RegExp regexp = RegExp(r'^.{5,}$');
         if (value!.isEmpty) {
-          return ("Username richiesto");
+          return (Strings.usernameRequired);
         }
         if (!regexp.hasMatch(value)) {
-          return ("Immettere uno Username valido. (Min. 5 caratteri)");
+          return (Strings.usernameInvalid);
         }
       },
       onSaved: (value) {
@@ -53,7 +51,6 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           )),
     );
 
-    // email field
     final emailField = TextFormField(
       autofocus: false,
       controller: emailController,
@@ -61,11 +58,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       validator: (value) {
         RegExp regexp = RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]");
         if (value!.isEmpty) {
-          return ("Email richiesta");
+          return (Strings.emailRequired);
         }
-        // reg expression for email validation
         if (!regexp.hasMatch(value)) {
-          return ("Immettere una Email valida ");
+          return (Strings.emailInvalid);
         }
         return null;
       },
@@ -90,10 +86,10 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       validator: (value) {
         RegExp regexp = RegExp(r'^.{6,}$');
         if (value!.isEmpty) {
-          return ("Password richiesta");
+          return (Strings.passwordRequired);
         }
         if (!regexp.hasMatch(value)) {
-          return ("Immettere una Password valida. (Min. 6 caratteri)");
+          return (Strings.passwordInvalid);
         }
       },
       onSaved: (value) {
@@ -109,14 +105,13 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           )),
     );
 
-    // confermaPassword field
     final confermaPasswordField = TextFormField(
       autofocus: false,
       controller: confermaPasswordController,
       obscureText: true,
       validator: (value) {
         if (confermaPasswordController.text != passwordController.text) {
-          return "Le Password non coincidono";
+          return Strings.passwordNotEquals;
         }
         return null;
       },
@@ -127,7 +122,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
       decoration: InputDecoration(
           prefixIcon: const Icon(Icons.vpn_key),
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Conferma Password",
+          hintText: Strings.passwordConfirm,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -189,7 +184,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          const Text("Sei già registrato? "),
+                          const Text(Strings.yetRegistered),
                           GestureDetector(
                             onTap: () {
                               Navigator.pushReplacement(

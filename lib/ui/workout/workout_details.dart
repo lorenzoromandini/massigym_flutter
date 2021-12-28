@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:massigym_flutter/strings.dart';
 import 'package:massigym_flutter/ui/workout/workout_timer.dart';
 import 'package:massigym_flutter/ui/workout/workout_video.dart';
 
@@ -42,7 +43,7 @@ class WorkoutDetails extends StatelessWidget {
         .collection("workouts")
         .doc(data.id)
         .update({"favourites": FieldValue.arrayUnion(userFavourite)});
-    return Fluttertoast.showToast(msg: "Aggiunto ai Preferiti");
+    return Fluttertoast.showToast(msg: Strings.addToFavourites);
   }
 
   removeFavourite() {
@@ -54,7 +55,7 @@ class WorkoutDetails extends StatelessWidget {
         .collection("workouts")
         .doc(data.id)
         .update({"favourites": FieldValue.arrayRemove(userFavourite)});
-    return Fluttertoast.showToast(msg: "Rimosso dai Preferiti");
+    return Fluttertoast.showToast(msg: Strings.removeFromFavourites);
   }
 
   checkLikes() {
@@ -66,7 +67,7 @@ class WorkoutDetails extends StatelessWidget {
     return checkL;
   }
 
-  addRating() {
+  addLike() {
     checkL = true;
     likes.length = 1;
     likes[0] = user!.email;
@@ -75,10 +76,10 @@ class WorkoutDetails extends StatelessWidget {
         .collection("workouts")
         .doc(data.id)
         .update({"likes": FieldValue.arrayUnion(likes)});
-    return Fluttertoast.showToast(msg: "Mi Piace aggiunto");
+    return Fluttertoast.showToast(msg: Strings.addLike);
   }
 
-  removeRating() {
+  removeLike() {
     checkFav = false;
     likes.length = 1;
     likes[0] = user!.email;
@@ -87,12 +88,12 @@ class WorkoutDetails extends StatelessWidget {
         .collection("workouts")
         .doc(data.id)
         .update({"likes": FieldValue.arrayRemove(likes)});
-    return Fluttertoast.showToast(msg: "Mi Piace rimosso");
+    return Fluttertoast.showToast(msg: Strings.removeLike);
   }
 
   deleteWorkout() {
     FirebaseFirestore.instance.collection("workouts").doc(data.id).delete();
-    return Fluttertoast.showToast(msg: "Workout eliminato");
+    return Fluttertoast.showToast(msg: Strings.deleteWorkout);
   }
 
   @override
@@ -119,9 +120,9 @@ class WorkoutDetails extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 38, vertical: 22)),
         onPressed: () {
           if (!checkLikes()) {
-            addRating();
+            addLike();
           } else {
-            removeRating();
+            removeLike();
           }
           Navigator.pop(context);
         },

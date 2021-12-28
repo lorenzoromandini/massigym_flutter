@@ -16,11 +16,11 @@ class _HomeScreenState extends State<HomeScreen> {
         body: SingleChildScrollView(
             child: Column(children: [
           buildCategory(),
-          buildCard("Cardio", Strings.cardioTopDescription,
+          buildCard(Strings.cardioCategory, Strings.cardioTopDescription,
               Strings.cardioBottomDescription, Strings.cardioImageUrl),
-          buildCard("Legs", Strings.legsTopDescription,
+          buildCard(Strings.legsCategory, Strings.legsTopDescription,
               Strings.legsBottomDescription, Strings.legsImageUrl),
-          buildCard("Arms", Strings.armsTopDescription,
+          buildCard(Strings.armsCategory, Strings.armsTopDescription,
               Strings.armsBottomDescription, Strings.armsImageUrl)
         ])));
   }

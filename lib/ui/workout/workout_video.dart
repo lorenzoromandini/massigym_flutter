@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:massigym_flutter/strings.dart';
 import 'package:video_player/video_player.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -39,7 +40,7 @@ class _WorkoutVideoState extends State<WorkoutVideo> {
   }
 
   downloadVideo() async {
-    Fluttertoast.showToast(msg: "Download avviato");
+    Fluttertoast.showToast(msg: Strings.downloadInitialized);
     final appStorage = await getExternalStorageDirectory();
     final file = File('${appStorage!.path}/${widget.data["name"]}.mp4');
     final response = await Dio().get(widget.data["videoUrl"],
@@ -47,7 +48,7 @@ class _WorkoutVideoState extends State<WorkoutVideo> {
             responseType: ResponseType.bytes,
             followRedirects: false,
             receiveTimeout: 0));
-    Fluttertoast.showToast(msg: "Download in corso...");
+    Fluttertoast.showToast(msg: Strings.downloadPending);
 
     final raf = file.openSync(mode: FileMode.write);
     raf.writeFromSync(response.data);

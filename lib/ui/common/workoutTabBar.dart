@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:massigym_flutter/strings.dart';
 import 'package:massigym_flutter/ui/workout/add_workout.dart';
 import 'package:massigym_flutter/ui/workout/arms.dart';
 import 'package:massigym_flutter/ui/workout/cardio.dart';
@@ -39,9 +40,9 @@ class _WorkoutTabBarState extends State<WorkoutTabBar>
         bottom: TabBar(
           controller: _tabController,
           tabs: [
-            Tab(text: "Cardio"),
-            Tab(text: "Legs"),
-            Tab(text: "Arms"),
+            Tab(text: Strings.cardioCategory),
+            Tab(text: Strings.legsCategory),
+            Tab(text: Strings.armsCategory),
           ],
         ),
       ),

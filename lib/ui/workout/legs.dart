@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:massigym_flutter/strings.dart';
 import 'package:massigym_flutter/ui/common/searchWorkout.dart';
 import 'package:massigym_flutter/ui/workout/workout_details.dart';
 
@@ -21,7 +22,8 @@ class _LegsState extends State<Legs> {
           title: Card(
             child: TextField(
               decoration: InputDecoration(
-                  prefixIcon: Icon(Icons.search), hintText: "Cerca..."),
+                  prefixIcon: Icon(Icons.search),
+                  hintText: Strings.searchLabel),
               onChanged: (value) {
                 setState(() {
                   name = value;

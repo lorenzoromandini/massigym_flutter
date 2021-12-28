@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:massigym_flutter/strings.dart';
 import 'package:massigym_flutter/ui/auth/login_screen.dart';
 
 class ChangePassword extends StatefulWidget {
@@ -26,10 +27,10 @@ class _ChangePasswordState extends State<ChangePassword> {
       validator: (value) {
         RegExp regexp = RegExp(r'^.{6,}$');
         if (value!.isEmpty) {
-          return ("Password richiesta");
+          return (Strings.passwordRequired);
         }
         if (!regexp.hasMatch(value)) {
-          return ("Immettere una Password valida. (Min. 6 caratteri)");
+          return (Strings.passwordInvalid);
         }
       },
       onSaved: (value) {
@@ -51,7 +52,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       obscureText: true,
       validator: (value) {
         if (confermaPasswordController.text != passwordController.text) {
-          return "Le Password non coincidono";
+          return Strings.passwordNotEquals;
         }
         return null;
       },
@@ -62,7 +63,7 @@ class _ChangePasswordState extends State<ChangePassword> {
       decoration: InputDecoration(
           prefixIcon: const Icon(Icons.vpn_key),
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Conferma Password",
+          hintText: Strings.passwordConfirm,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10),
           )),
@@ -79,7 +80,7 @@ class _ChangePasswordState extends State<ChangePassword> {
           changePassword(passwordController.text);
         },
         child: const Text(
-          "Modifica Password",
+          Strings.changePassword,
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
@@ -88,7 +89,7 @@ class _ChangePasswordState extends State<ChangePassword> {
     );
     return Scaffold(
       appBar: AppBar(
-        title: Text("Modifica Password"),
+        title: Text(Strings.changePassword),
         elevation: 0,
       ),
       body: SingleChildScrollView(
@@ -119,7 +120,7 @@ class _ChangePasswordState extends State<ChangePassword> {
     User? user = FirebaseAuth.instance.currentUser;
     user!.updatePassword(password).then((_) async {
       Fluttertoast.showToast(
-          msg: "Successfully changed password",
+          msg: Strings.passwordChangedSuccessfully,
           toastLength: Toast.LENGTH_SHORT);
       await FirebaseAuth.instance.signOut();
 
@@ -129,10 +130,8 @@ class _ChangePasswordState extends State<ChangePassword> {
           (route) => false);
     }).catchError((error) {
       Fluttertoast.showToast(
-          msg: "Password can't be changed" + error.toString(),
+          msg: Strings.passwordNotChanged + error.toString(),
           toastLength: Toast.LENGTH_LONG);
-
-      //This might happen, when the wrong password is in, the user isn't found, or if the user hasn't logged in recently.
     });
   }
 }

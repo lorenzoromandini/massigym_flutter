@@ -7,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:massigym_flutter/models/workout.dart';
+import 'package:massigym_flutter/strings.dart';
 import 'package:massigym_flutter/ui/common/bottomNavBar.dart';
 import 'package:path/path.dart';
 
@@ -75,7 +76,7 @@ class _AddWorkoutState extends State<AddWorkout> {
         String duration) async {
       if (_formKey.currentState!.validate()) {
         Fluttertoast.showToast(
-            msg: "Inserimento Workout avviato...", toastLength: Toast.LENGTH_LONG);
+            msg: Strings.addWorkoutInitialized, toastLength: Toast.LENGTH_LONG);
 
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
         User? user = FirebaseAuth.instance.currentUser;
@@ -125,7 +126,6 @@ class _AddWorkoutState extends State<AddWorkout> {
         }
 
         if (videoFile != null) {
-          // upload to firebase
           var snapshot = await storage
               .ref()
               .child(
@@ -141,8 +141,7 @@ class _AddWorkoutState extends State<AddWorkout> {
         workoutModel.videoUrl = videoUrl;
 
         Fluttertoast.showToast(
-            msg: "Inserimento Workout in corso...",
-            toastLength: Toast.LENGTH_LONG);
+            msg: Strings.addWorkoutPending, toastLength: Toast.LENGTH_LONG);
 
         FirebaseFirestore.instance.collection("workouts").doc().update({
           "imageUrl": workoutModel.imageUrl = imageUrl,
@@ -154,7 +153,7 @@ class _AddWorkoutState extends State<AddWorkout> {
             .doc()
             .set(workoutModel.toMap());
 
-        Fluttertoast.showToast(msg: "Allenamento inserito con successo");
+        Fluttertoast.showToast(msg: Strings.addWorkoutSuccess);
 
         Navigator.pushAndRemoveUntil(
             (context),
@@ -170,10 +169,10 @@ class _AddWorkoutState extends State<AddWorkout> {
       validator: (value) {
         RegExp regexp = RegExp(r'^.{2,}$');
         if (value!.isEmpty) {
-          return ("Nome richiesto");
+          return (Strings.nameRequired);
         }
         if (!regexp.hasMatch(value)) {
-          return ("Immetti un Nome valido. (Min. 2 caratteri)");
+          return (Strings.nameInvalid);
         }
       },
       onSaved: (value) {
@@ -211,7 +210,7 @@ class _AddWorkoutState extends State<AddWorkout> {
         }),
         validator: (value) {
           if (value!.isEmpty) {
-            return 'Categoria richiesta';
+            return Strings.categoryRequired;
           }
         },
       ),
@@ -224,10 +223,10 @@ class _AddWorkoutState extends State<AddWorkout> {
       validator: (value) {
         RegExp regexp = RegExp(r'^.{15,}$');
         if (value!.isEmpty) {
-          return ("Descrizione richiesta");
+          return (Strings.descriptionRequired);
         }
         if (!regexp.hasMatch(value)) {
-          return ("Immetti una Descrizione valida. (Min. 15 caratteri)");
+          return (Strings.descriptionInvalid);
         }
       },
       onSaved: (value) {
@@ -260,7 +259,7 @@ class _AddWorkoutState extends State<AddWorkout> {
         }),
         validator: (value) {
           if (value!.isEmpty) {
-            return 'Durata richiesta';
+            return Strings.durationRequired;
           }
         },
       ),
@@ -278,7 +277,7 @@ class _AddWorkoutState extends State<AddWorkout> {
               descriptionController.text, durationController.text);
         },
         child: const Text(
-          "Inserisci Workout",
+          Strings.addWorkout,
           textAlign: TextAlign.center,
           style: TextStyle(
               fontSize: 20, color: Colors.white, fontWeight: FontWeight.bold),
@@ -286,17 +285,15 @@ class _AddWorkoutState extends State<AddWorkout> {
       ),
     );
 
-    final imageFileName = imageFile != null
-        ? basename(imageFile!.path)
-        : "Nessun file selezionato";
-    final videoFileName = videoFile != null
-        ? basename(videoFile!.path)
-        : "Nessun file selezionato";
+    final imageFileName =
+        imageFile != null ? basename(imageFile!.path) : Strings.noFileSelected;
+    final videoFileName =
+        videoFile != null ? basename(videoFile!.path) : Strings.noFileSelected;
 
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Inserisci Workout"),
+        title: Text(Strings.addWorkout),
         elevation: 0,
       ),
       body: Center(
