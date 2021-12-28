@@ -46,8 +46,8 @@ class _AddWorkoutState extends State<AddWorkout> {
   ];
   String? durationValue;
   final storage = FirebaseStorage.instance;
-  File? imageFile;
-  File? videoFile;
+  File? imageFile = null;
+  File? videoFile = null;
 
   Future selectImage() async {
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
@@ -75,7 +75,7 @@ class _AddWorkoutState extends State<AddWorkout> {
         String duration) async {
       if (_formKey.currentState!.validate()) {
         Fluttertoast.showToast(
-            msg: "Inserimento Workout avviato", toastLength: Toast.LENGTH_LONG);
+            msg: "Inserimento Workout avviato...", toastLength: Toast.LENGTH_LONG);
 
         FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
         User? user = FirebaseAuth.instance.currentUser;
@@ -111,7 +111,7 @@ class _AddWorkoutState extends State<AddWorkout> {
         String imageUrl = "";
         String videoUrl = "";
 
-        if (imageFile != "") {
+        if (imageFile != null) {
           // upload to firebase
           var snapshot = await storage
               .ref()
@@ -124,7 +124,7 @@ class _AddWorkoutState extends State<AddWorkout> {
           });
         }
 
-        if (videoFile != "") {
+        if (videoFile != null) {
           // upload to firebase
           var snapshot = await storage
               .ref()

@@ -4,7 +4,7 @@
             <uses-feature android:name="android.hardware.camera" 
                           android:required="false"/>
    <application
-        android:label="massigym"
+        android:label="massigym_flutter"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
