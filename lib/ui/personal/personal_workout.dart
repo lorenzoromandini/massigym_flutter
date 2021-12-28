@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:massigym_flutter/ui/workout/workout_details.dart';
 
 class PersonalWorkout extends StatefulWidget {
@@ -29,7 +30,7 @@ class _PersonalWorkoutState extends State<PersonalWorkout> {
                     return Card(
                       child: ListTile(
                         title:
-                            Text("${data["name"]}        ${data["duration"]}s"),
+                            Text("${data["name"]}        ${data["duration"]} s"),
                         subtitle: Text(data["category"]),
                         leading: SizedBox(
                           width: 120,
@@ -42,7 +43,21 @@ class _PersonalWorkoutState extends State<PersonalWorkout> {
                               : Image.asset("assets/workout_image_empty.png",
                                   fit: BoxFit.contain),
                         ),
-                        trailing: Icon(Icons.arrow_forward_rounded),
+                        trailing: Column(
+                          children: [
+                            Icon(
+                              FontAwesome.thumbs_up,
+                              color: Colors.lightBlue,
+                            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                            Text(
+                              "${enumerateLikes(data)}",
+                              style: TextStyle(fontWeight: FontWeight.w500),
+                            ),
+                          ],
+                        ),
                         onTap: () {
                           Navigator.push(
                               context,
@@ -63,4 +78,12 @@ class _PersonalWorkoutState extends State<PersonalWorkout> {
         ),
         body: workoutList);
   }
+}
+
+enumerateLikes(data) {
+  int likes = 0;
+  for (String like in data["likes"]) {
+    likes++;
+  }
+  return likes;
 }
