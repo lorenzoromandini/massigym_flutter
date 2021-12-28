@@ -11,6 +11,7 @@ import 'package:massigym_flutter/strings.dart';
 import 'package:massigym_flutter/ui/common/bottomNavBar.dart';
 import 'package:path/path.dart';
 
+// schermata di inserimento di un nuovo workout
 class AddWorkout extends StatefulWidget {
   AddWorkout({Key? key}) : super(key: key);
 
@@ -50,6 +51,7 @@ class _AddWorkoutState extends State<AddWorkout> {
   File? imageFile = null;
   File? videoFile = null;
 
+  // metodo per la selezione dell'immagine dall'archivio del telefono
   Future selectImage() async {
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
     if (result == null) return;
@@ -60,6 +62,7 @@ class _AddWorkoutState extends State<AddWorkout> {
     });
   }
 
+  // metodo per la selezione del video dall'archivio del telefono
   Future selectVideo() async {
     final result = await FilePicker.platform.pickFiles(allowMultiple: false);
     if (result == null) return;
@@ -72,6 +75,7 @@ class _AddWorkoutState extends State<AddWorkout> {
 
   @override
   Widget build(BuildContext context) {
+    // metodo per l'inserimento del workout
     insertWorkout(String name, String category, String description,
         String duration) async {
       if (_formKey.currentState!.validate()) {
@@ -88,6 +92,8 @@ class _AddWorkoutState extends State<AddWorkout> {
             .get();
         var username = userDoc["username"];
 
+        // l'oggetto di tipo WorkoutModel viene riempito a partire dai campi delle form,
+        // dall'email e dallo username dell'utente, mentre immagine e video sono momentaneamente vuoti
         workoutModel.name = nameController.text;
         workoutModel.category = categoryValue;
         workoutModel.description = descriptionController.text;
@@ -99,6 +105,7 @@ class _AddWorkoutState extends State<AddWorkout> {
         workoutModel.imageUrl = "";
         workoutModel.videoUrl = "";
 
+        // divido il nome del workout per caratteri successivi : questo servirà per la barra di ricerca
         List<String> splitName = name.split(" ");
         workoutModel.searchKeyList = [];
 
@@ -113,7 +120,9 @@ class _AddWorkoutState extends State<AddWorkout> {
         String videoUrl = "";
 
         if (imageFile != null) {
-          // upload to firebase
+          // se è stata selezionata un'immagine allora verrà caricata nello Storage
+          // nella cartella corrispondente alla categoria dell'allenamento, avente come nome
+          // l'email dell'utente seguita dal nome dell'allenamento e infine specificato che è un'immagine
           var snapshot = await storage
               .ref()
               .child(
@@ -126,6 +135,9 @@ class _AddWorkoutState extends State<AddWorkout> {
         }
 
         if (videoFile != null) {
+          // se è stata selezionato un video allora verrà caricato nello Storage
+          // nella cartella corrispondente alla categoria dell'allenamento, avente come nome
+          // l'email dell'utente seguito dal nome dell'allenamento e infine specificato che è un video
           var snapshot = await storage
               .ref()
               .child(
@@ -137,17 +149,14 @@ class _AddWorkoutState extends State<AddWorkout> {
           });
         }
 
+        // vengono aggiornati i campi relativi all'immagine e al video con gli Url
         workoutModel.imageUrl = imageUrl;
         workoutModel.videoUrl = videoUrl;
 
         Fluttertoast.showToast(
             msg: Strings.addWorkoutPending, toastLength: Toast.LENGTH_LONG);
 
-        FirebaseFirestore.instance.collection("workouts").doc().update({
-          "imageUrl": workoutModel.imageUrl = imageUrl,
-          "videoUrl": workoutModel.videoUrl = videoUrl
-        });
-
+        // viene caricato lo UserModel nel Firestore
         await firebaseFirestore
             .collection("workouts")
             .doc()
@@ -162,10 +171,12 @@ class _AddWorkoutState extends State<AddWorkout> {
       }
     }
 
+    // form del nome
     final nameField = TextFormField(
       autofocus: false,
       controller: nameController,
       keyboardType: TextInputType.name,
+      // regole per l'inserimento del nome
       validator: (value) {
         RegExp regexp = RegExp(r'^.{2,}$');
         if (value!.isEmpty) {
@@ -188,11 +199,13 @@ class _AddWorkoutState extends State<AddWorkout> {
           )),
     );
 
+    // modello per la form di selezione di categoria e durata
     DropdownMenuItem<String> buildMenuItem(String item) => DropdownMenuItem(
         value: item,
         child: Text(item,
             style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20)));
 
+    // form di selezione della categoria
     final categoryField = Container(
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
@@ -216,10 +229,12 @@ class _AddWorkoutState extends State<AddWorkout> {
       ),
     );
 
+    // form della descrizione
     final descriptionField = TextFormField(
       autofocus: false,
       controller: descriptionController,
       keyboardType: TextInputType.name,
+      // regole per l'inserimento della descrizione
       validator: (value) {
         RegExp regexp = RegExp(r'^.{15,}$');
         if (value!.isEmpty) {
@@ -242,6 +257,7 @@ class _AddWorkoutState extends State<AddWorkout> {
           )),
     );
 
+    // form di selezione della durata
     final durationField = Container(
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 4),
       decoration: BoxDecoration(
@@ -265,6 +281,7 @@ class _AddWorkoutState extends State<AddWorkout> {
       ),
     );
 
+    // bottone per l'inserimento del workout
     final insertWorkoutButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
@@ -285,6 +302,7 @@ class _AddWorkoutState extends State<AddWorkout> {
       ),
     );
 
+    // verifica se sono stati selezionati immagine e video
     final imageFileName =
         imageFile != null ? basename(imageFile!.path) : Strings.noFileSelected;
     final videoFileName =
@@ -355,6 +373,7 @@ class _AddWorkoutState extends State<AddWorkout> {
   }
 }
 
+// modello per il bottone di selezione di immagine e video
 class ButtonWidget extends StatelessWidget {
   final IconData icon;
   final VoidCallback onClicked;

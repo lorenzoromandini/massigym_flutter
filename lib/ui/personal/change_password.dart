@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:massigym_flutter/strings.dart';
 import 'package:massigym_flutter/ui/auth/login_screen.dart';
 
+// schermata di modifica della password, a cui è possibile accedere attraverso la schermata del Profilo
 class ChangePassword extends StatefulWidget {
   ChangePassword({Key? key}) : super(key: key);
 
@@ -20,10 +21,12 @@ class _ChangePasswordState extends State<ChangePassword> {
 
   @override
   Widget build(BuildContext context) {
+    // form della nuova password
     final passwordField = TextFormField(
       autofocus: false,
       controller: passwordController,
       obscureText: true,
+      // regole per l'inserimento della nuova password
       validator: (value) {
         RegExp regexp = RegExp(r'^.{6,}$');
         if (value!.isEmpty) {
@@ -46,10 +49,12 @@ class _ChangePasswordState extends State<ChangePassword> {
           )),
     );
 
+    // form della conferma password
     final confermaPasswordField = TextFormField(
       autofocus: false,
       controller: confermaPasswordController,
       obscureText: true,
+      // password e conferma password sono differenti
       validator: (value) {
         if (confermaPasswordController.text != passwordController.text) {
           return Strings.passwordNotEquals;
@@ -69,6 +74,7 @@ class _ChangePasswordState extends State<ChangePassword> {
           )),
     );
 
+    // bottone di modifica password
     final changePasswordButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
@@ -87,6 +93,7 @@ class _ChangePasswordState extends State<ChangePassword> {
         ),
       ),
     );
+
     return Scaffold(
       appBar: AppBar(
         title: Text(Strings.changePassword),
@@ -116,12 +123,15 @@ class _ChangePasswordState extends State<ChangePassword> {
     );
   }
 
+  // metodo che invoca la funzione di modifica password di Firebase, passando come parametro la nuova password inserita nella form
   void changePassword(String password) async {
     User? user = FirebaseAuth.instance.currentUser;
     user!.updatePassword(password).then((_) async {
       Fluttertoast.showToast(
           msg: Strings.passwordChangedSuccessfully,
           toastLength: Toast.LENGTH_SHORT);
+
+      // una volta modificata la password l'utente viene disconnesso e dovrà effettuare nuovamente il login per accedere
       await FirebaseAuth.instance.signOut();
 
       Navigator.pushAndRemoveUntil(

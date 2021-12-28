@@ -3,6 +3,8 @@ import 'package:massigym_flutter/ui/personal/personal_workout.dart';
 import 'package:massigym_flutter/ui/personal/preferiti.dart';
 import 'package:massigym_flutter/ui/personal/profilo.dart';
 
+// schermata di passaggio per l'area personale, attraverso cui si può accedere alle schermate dei Workout caricati
+// dall'utente, ai workout Preferiti dall'utente e al Profilo dell'utente
 class PersonaleScreen extends StatefulWidget {
   const PersonaleScreen({Key? key}) : super(key: key);
 
@@ -13,6 +15,8 @@ class PersonaleScreen extends StatefulWidget {
 class _PersonaleScreenState extends State<PersonaleScreen> {
   @override
   Widget build(BuildContext context) {
+
+    // bottone per accedere all'area degli allenamenti inseriti dall'utente
     final personalWorkoutButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
@@ -35,6 +39,7 @@ class _PersonaleScreenState extends State<PersonaleScreen> {
       ),
     );
 
+    // bottone per accedere all'area degli allenamenti preferiti dall'utente
     final preferitiButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
@@ -57,6 +62,7 @@ class _PersonaleScreenState extends State<PersonaleScreen> {
       ),
     );
 
+    // bottone per accedere all'area del profilo dell'utente
     final profiloButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),

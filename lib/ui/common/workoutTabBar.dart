@@ -5,6 +5,8 @@ import 'package:massigym_flutter/ui/workout/arms.dart';
 import 'package:massigym_flutter/ui/workout/cardio.dart';
 import 'package:massigym_flutter/ui/workout/legs.dart';
 
+// barra di navigazione disposta nella parte superiore della schermata dei Workout che gestisce il passaggio
+// tra le varie categorie degli allenamenti
 class WorkoutTabBar extends StatefulWidget {
   WorkoutTabBar({Key? key}) : super(key: key);
 

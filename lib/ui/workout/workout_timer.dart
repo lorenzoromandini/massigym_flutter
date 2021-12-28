@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+// schermata del timer dell'allenamento, a cui è possibile accedere attraverso la schermata dei dettagli workout
 class WorkoutTimer extends StatefulWidget {
   DocumentSnapshot data;
 
@@ -24,6 +25,7 @@ class _WorkoutTimerState extends State<WorkoutTimer> {
     });
   }
 
+  // metodo per l'avvio e ripresa del timer
   startTimer({bool reset = true}) {
     if (reset) {
       resetTimer();
@@ -39,6 +41,7 @@ class _WorkoutTimerState extends State<WorkoutTimer> {
     });
   }
 
+  // metodo per mettere in pausa il timer
   stopTimer({bool reset = true}) {
     if (reset) {
       resetTimer();
@@ -48,6 +51,7 @@ class _WorkoutTimerState extends State<WorkoutTimer> {
     });
   }
 
+  // metodo per il reset del timer
   resetTimer() {
     setState(() {
       durata = (widget.data["duration"]);
@@ -73,6 +77,7 @@ class _WorkoutTimerState extends State<WorkoutTimer> {
         ));
   }
 
+  // widget dei bottoni di play, pause e reset del timer
   Widget buildButtons() {
     final isRunning = timer == null ? false : timer!.isActive;
     final isCompleted = durata == widget.data["duration"] || durata == 0;
@@ -113,6 +118,7 @@ class _WorkoutTimerState extends State<WorkoutTimer> {
           );
   }
 
+  // widget dell'indicatore del progresso del timer
   Widget buildTimer() {
     return SizedBox(
       width: 200,
@@ -131,6 +137,7 @@ class _WorkoutTimerState extends State<WorkoutTimer> {
     );
   }
 
+  // widget per il tempo rimasto all'interno del timer
   Widget buildTime() {
     if (durata == 0) {
       return Icon(Icons.done, color: Colors.green, size: 112);
@@ -144,6 +151,7 @@ class _WorkoutTimerState extends State<WorkoutTimer> {
   }
 }
 
+// modello dei bottoni di play, pause e reset del timer
 class ButtonWidget extends StatelessWidget {
   final Icon icon;
   final VoidCallback onClicked;

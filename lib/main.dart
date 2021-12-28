@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:massigym_flutter/ui/auth/login_screen.dart';
 import 'package:massigym_flutter/ui/common/bottomNavBar.dart';
 
+// punto di partenza dell'applicazione
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // collegamento al database Firebase
   await Firebase.initializeApp(
       /*
     options: const FirebaseOptions(
@@ -17,6 +19,11 @@ Future<void> main() async {
       projectId: "massigym-80757", // Your projectId
     ), */
       );
+
+  // quelle commentate sono opzione richieste per il funzionamento dell'app su browser,
+  // mentre su telefono ed emulatore non sono necessarie
+
+
   runApp(const MyApp());
 }
 
@@ -36,6 +43,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// splash screen dell'app, avviene all'apertura 
 class StartScreen extends StatefulWidget {
   StartScreen({Key? key}) : super(key: key);
 
@@ -48,6 +56,7 @@ class _StartScreenState extends State<StartScreen> {
   void initState() {
     super.initState();
     Timer(const Duration(milliseconds: 2000), () {
+      // session : verifica se l'utente era già loggato
       var user = FirebaseAuth.instance.currentUser;
       if (user == null) {
         Navigator.of(context).pushReplacement(

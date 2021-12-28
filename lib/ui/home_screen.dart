@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:massigym_flutter/strings.dart';
 
+// schermata delle home dell'applicazione
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key? key}) : super(key: key);
 
@@ -15,7 +16,14 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(title: const Text("Home")),
         body: SingleChildScrollView(
             child: Column(children: [
-          buildCategory(),
+          Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Padding(
+                padding: EdgeInsets.only(top: 20),
+                child: Text(
+                  "Categorie",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
+                ))
+          ]),
           buildCard(Strings.cardioCategory, Strings.cardioTopDescription,
               Strings.cardioBottomDescription, Strings.cardioImageUrl),
           buildCard(Strings.legsCategory, Strings.legsTopDescription,
@@ -25,17 +33,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ])));
   }
 
-  Widget buildCategory() {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Padding(
-          padding: EdgeInsets.only(top: 20),
-          child: Text(
-            "Categorie",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),
-          ))
-    ]);
-  }
-
+  // widget per il modello della card di ogni categoria
   Widget buildCard(category, workout_top_description,
       workout_bottom_description, workout_imageUrl) {
     return Padding(

@@ -3,21 +3,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:massigym_flutter/ui/workout/workout_details.dart';
 
+// widget che si occupa della barra di ricerca e delle informazioni da mostrare sull'etichetta di ogni workout
 Widget searchWorkout(String? category, String? name) {
   return StreamBuilder<QuerySnapshot>(
+      // caratteri inseriti all'interno della barra di ricerca
       stream: (name != "" && name != null)
+          // se è inserito qualche carattere nella barra di ricerca si va a interrogare il db per vedere se sono presenti
           ? FirebaseFirestore.instance
               .collection("workouts")
               .where("category", isEqualTo: category)
               .where("searchKeywords", arrayContains: name)
               .snapshots()
+          // se non è inserito nulla mostra tutti i workout dell'apposita categoria
           : FirebaseFirestore.instance
               .collection("workouts")
               .where("category", isEqualTo: category)
               .snapshots(),
       builder: (context, snapshot) {
         return (snapshot.connectionState == ConnectionState.waiting)
+            // durante il caricamento dei dati dal db viene mostrato un indicatore che ruota
             ? Center(child: CircularProgressIndicator())
+            // una volta caricati i dati viene mostrata la lista degli allenamenti
             : ListView.builder(
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (BuildContext context, int index) {
@@ -38,10 +44,12 @@ Widget searchWorkout(String? category, String? name) {
                         width: 120,
                         height: 80,
                         child: (data["imageUrl"] != "")
+                            // se è stata caricata l'immagine dell'allenamento quella verrà mostrata
                             ? Image.network(
                                 data["imageUrl"],
                                 fit: BoxFit.contain,
                               )
+                            // se non è stata caricata l'immagine dell'allenamento verrà mostrata un'immagine standard
                             : Image.asset("assets/workout_image_empty.png",
                                 fit: BoxFit.contain),
                       ),
@@ -54,6 +62,7 @@ Widget searchWorkout(String? category, String? name) {
                           SizedBox(
                             height: 8,
                           ),
+                          // mostra il numero totale di Mi Piace di quell'allenamento
                           Text(
                             "${enumerateLikes(data)}",
                             style: TextStyle(fontWeight: FontWeight.w500),
@@ -73,6 +82,7 @@ Widget searchWorkout(String? category, String? name) {
       });
 }
 
+// metodo che calcola il numero di mi piace messi ad ogni singolo allenamento
 enumerateLikes(data) {
   int likes = 0;
   for (String like in data["likes"]) {

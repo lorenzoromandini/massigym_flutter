@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:massigym_flutter/ui/workout/workout_details.dart';
 
+// schermata contenente la lista dei workout inseriti dall'utente
 class PersonalWorkout extends StatefulWidget {
   PersonalWorkout({Key? key}) : super(key: key);
 
@@ -16,6 +17,7 @@ class _PersonalWorkoutState extends State<PersonalWorkout> {
   @override
   Widget build(BuildContext context) {
     final workoutList = StreamBuilder<QuerySnapshot>(
+        // ottiene dal db tutti gli allenamenti inseriti dall'utente
         stream: FirebaseFirestore.instance
             .collection("workouts")
             .where('userMail', isEqualTo: user!.email)
@@ -29,8 +31,8 @@ class _PersonalWorkoutState extends State<PersonalWorkout> {
                     DocumentSnapshot data = snapshot.data!.docs[index];
                     return Card(
                       child: ListTile(
-                        title:
-                            Text("${data["name"]}        ${data["duration"]} s"),
+                        title: Text(
+                            "${data["name"]}        ${data["duration"]} s"),
                         subtitle: Text(data["category"]),
                         leading: SizedBox(
                           width: 120,
@@ -52,6 +54,7 @@ class _PersonalWorkoutState extends State<PersonalWorkout> {
                             SizedBox(
                               height: 8,
                             ),
+                            // mostra il numero totale di Mi Piace di quell'allenamento
                             Text(
                               "${enumerateLikes(data)}",
                               style: TextStyle(fontWeight: FontWeight.w500),
@@ -80,6 +83,7 @@ class _PersonalWorkoutState extends State<PersonalWorkout> {
   }
 }
 
+// metodo che calcola il numero di mi piace messi ad ogni singolo allenamento
 enumerateLikes(data) {
   int likes = 0;
   for (String like in data["likes"]) {

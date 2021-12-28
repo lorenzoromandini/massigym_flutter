@@ -6,6 +6,7 @@ import 'package:massigym_flutter/models/user_model.dart';
 import 'package:massigym_flutter/strings.dart';
 import 'package:massigym_flutter/ui/auth/login_screen.dart';
 
+// schermata di Registrazione
 class RegistrationScreen extends StatefulWidget {
   const RegistrationScreen({Key? key}) : super(key: key);
 
@@ -25,10 +26,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // form dello username
     final usernameField = TextFormField(
       autofocus: false,
       controller: usernameController,
       keyboardType: TextInputType.name,
+      // regole per l'inserimento dello username
       validator: (value) {
         RegExp regexp = RegExp(r'^.{5,}$');
         if (value!.isEmpty) {
@@ -51,10 +54,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           )),
     );
 
+    // form dell'email
     final emailField = TextFormField(
       autofocus: false,
       controller: emailController,
       keyboardType: TextInputType.emailAddress,
+      // regole per l'inserimento dell'email
       validator: (value) {
         RegExp regexp = RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]");
         if (value!.isEmpty) {
@@ -78,11 +83,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           )),
     );
 
-    // password field
+    // form della password
     final passwordField = TextFormField(
       autofocus: false,
       controller: passwordController,
       obscureText: true,
+      // regole per l'inserimento della password
       validator: (value) {
         RegExp regexp = RegExp(r'^.{6,}$');
         if (value!.isEmpty) {
@@ -105,10 +111,12 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           )),
     );
 
+    // form della conferma password
     final confermaPasswordField = TextFormField(
       autofocus: false,
       controller: confermaPasswordController,
       obscureText: true,
+      // password e conferma password sono differenti
       validator: (value) {
         if (confermaPasswordController.text != passwordController.text) {
           return Strings.passwordNotEquals;
@@ -128,6 +136,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
           )),
     );
 
+    // bottone della registrazione
     final signUpButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
@@ -212,6 +221,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     );
   }
 
+  // metodo che invoca la funzione di registrazione di Firebase, passando come parametri email e password inseriti nella form
   void signUp(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       await _auth
@@ -223,6 +233,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     }
   }
 
+  // metodo che svolge il compito di inserire i dati immessi nella form all'interno del database Firebase Firestore
   void postDetailsToFirestore() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
@@ -232,6 +243,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     userModel.username = usernameController.text;
     userModel.profileImageUrl = "";
 
+    // email e username vengono inseriti nella collection "users"
     await firebaseFirestore
         .collection("users")
         .doc(user!.email)

@@ -5,6 +5,7 @@ import 'package:massigym_flutter/strings.dart';
 import 'package:massigym_flutter/ui/common/bottomNavBar.dart';
 import 'package:massigym_flutter/ui/auth/registration_screen.dart';
 
+// schermata di Login
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -20,10 +21,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // form dell'email
     final emailField = TextFormField(
       autofocus: false,
       controller: emailController,
       keyboardType: TextInputType.emailAddress,
+      // regole per l'inserimento dell'email
       validator: (value) {
         RegExp regexp = RegExp("^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9.-]+.[a-z]");
         if (value!.isEmpty) {
@@ -47,10 +50,12 @@ class _LoginScreenState extends State<LoginScreen> {
           )),
     );
 
+    // form della password
     final passwordField = TextFormField(
       autofocus: false,
       controller: passwordController,
       obscureText: true,
+      // regole per l'inserimento della password
       validator: (value) {
         RegExp regexp = RegExp(r'^.{6,}$');
         if (value!.isEmpty) {
@@ -73,6 +78,7 @@ class _LoginScreenState extends State<LoginScreen> {
           )),
     );
 
+    // bottone del login
     final loginButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
@@ -154,6 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  // metodo che invoca la funzione di login di Firebase, passando come parametri email e password inseriti nella form
   void login(String email, String password) async {
     if (_formKey.currentState!.validate()) {
       await FirebaseAuth.instance

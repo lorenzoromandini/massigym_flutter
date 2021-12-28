@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+// model del workout
 class WorkoutModel {
   String? userMail;
   String? userName;
@@ -25,7 +26,7 @@ class WorkoutModel {
       this.userMail,
       this.userName});
 
-  // receiving data from server
+  // ottiene i dati dell'allenamento dal db e li inserisce all'interno di un oggetto di tipo Workout
   factory WorkoutModel.fromMap(map) {
     return WorkoutModel(
       userMail: map["userMail"],
@@ -41,7 +42,7 @@ class WorkoutModel {
     );
   }
 
-  // sending data to our server
+  // carica i dati nel db a partire da un oggetto di tipo Workout
   Map<String, dynamic> toMap() {
     return {
       'userMail': userMail,

@@ -8,6 +8,8 @@ import 'package:massigym_flutter/strings.dart';
 import 'package:video_player/video_player.dart';
 import 'package:path_provider/path_provider.dart';
 
+// schermata del video dell'allenamento, a cui è possibile accedere attraverso la schermata dei dettagli workout;
+// disponibile solo se l'utente che ha creato l'allenamento ha inserito il video
 class WorkoutVideo extends StatefulWidget {
   DocumentSnapshot data;
 
@@ -39,10 +41,14 @@ class _WorkoutVideoState extends State<WorkoutVideo> {
     super.dispose();
   }
 
+  // metodo per il download del video, a partire dall'Url dello stesso contenuto nel documento in Firestore
   downloadVideo() async {
     Fluttertoast.showToast(msg: Strings.downloadInitialized);
+    // accesso alle cartelle dell'archivio del telefono
     final appStorage = await getExternalStorageDirectory();
+    // percorso in cui viene archiviato il file
     final file = File('${appStorage!.path}/${widget.data["name"]}.mp4');
+    // opzioni per il download del video
     final response = await Dio().get(widget.data["videoUrl"],
         options: Options(
             responseType: ResponseType.bytes,
@@ -50,9 +56,11 @@ class _WorkoutVideoState extends State<WorkoutVideo> {
             receiveTimeout: 0));
     Fluttertoast.showToast(msg: Strings.downloadPending);
 
+    // download del video
     final raf = file.openSync(mode: FileMode.write);
     raf.writeFromSync(response.data);
     await raf.close();
+    
     return Fluttertoast.showToast(
         msg: "Download completato: $file", toastLength: Toast.LENGTH_LONG);
   }

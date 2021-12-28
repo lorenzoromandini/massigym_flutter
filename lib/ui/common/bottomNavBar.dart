@@ -3,6 +3,7 @@ import 'package:massigym_flutter/ui/home_screen.dart';
 import 'package:massigym_flutter/ui/personal/personale_screen.dart';
 import 'package:massigym_flutter/ui/common/workoutTabBar.dart';
 
+// barra di navigazione disposta nella parte inferiore della schermata principale che gestisce il passaggio tra una schermata e l'altra
 class BottomNavBar extends StatefulWidget {
   BottomNavBar({Key? key}) : super(key: key);
 

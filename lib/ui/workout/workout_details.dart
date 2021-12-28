@@ -9,6 +9,7 @@ import 'package:massigym_flutter/strings.dart';
 import 'package:massigym_flutter/ui/workout/workout_timer.dart';
 import 'package:massigym_flutter/ui/workout/workout_video.dart';
 
+// schermata contenenti i dettagli dell'allenamento
 class WorkoutDetails extends StatelessWidget {
   DocumentSnapshot data;
 
@@ -19,12 +20,11 @@ class WorkoutDetails extends StatelessWidget {
 
   List likes = [];
 
-  final TextEditingController starsController = TextEditingController();
-
   bool checkFav = false;
 
   bool checkL = false;
 
+  // verifica all'interno del db se l'utente ha inserito l'email tra i Preferiti
   checkFavourite() {
     for (String favourite in data["favourites"]) {
       if (favourite == user!.email) {
@@ -34,30 +34,37 @@ class WorkoutDetails extends StatelessWidget {
     return checkFav;
   }
 
+  // metodo che serve a inserire l'allenamento tra i Preferiti
   addFavourite() {
     checkFav = true;
     userFavourite.length = 1;
     userFavourite[0] = user!.email;
 
+    // inserisce in coda all'array "favourites" l'email dell'utente
     FirebaseFirestore.instance
         .collection("workouts")
         .doc(data.id)
         .update({"favourites": FieldValue.arrayUnion(userFavourite)});
+
     return Fluttertoast.showToast(msg: Strings.addToFavourites);
   }
 
+  // metodo che serve a rimuovere il workout dai preferiti dell'utente
   removeFavourite() {
     checkFav = false;
     userFavourite.length = 1;
     userFavourite[0] = user!.email;
 
+    // rimuove dall'array "favourites" l'email dell'utente
     FirebaseFirestore.instance
         .collection("workouts")
         .doc(data.id)
         .update({"favourites": FieldValue.arrayRemove(userFavourite)});
+
     return Fluttertoast.showToast(msg: Strings.removeFromFavourites);
   }
 
+  // verifica all'interno del db se l'utente ha messo Mi Piace
   checkLikes() {
     for (String like in data["likes"]) {
       if (like == user!.email) {
@@ -67,30 +74,37 @@ class WorkoutDetails extends StatelessWidget {
     return checkL;
   }
 
+  // metodo che serve a inserire Mi Piace
   addLike() {
     checkL = true;
     likes.length = 1;
     likes[0] = user!.email;
 
+    // inserisce in coda all'array "likes" l'email dell'utente
     FirebaseFirestore.instance
         .collection("workouts")
         .doc(data.id)
         .update({"likes": FieldValue.arrayUnion(likes)});
+
     return Fluttertoast.showToast(msg: Strings.addLike);
   }
 
+  // metodo che serve a rimuovere il Mi Piace precedentemente inserito dall'utente
   removeLike() {
     checkFav = false;
     likes.length = 1;
     likes[0] = user!.email;
 
+    // rimuove dall'array "likes" l'email dell'utente
     FirebaseFirestore.instance
         .collection("workouts")
         .doc(data.id)
         .update({"likes": FieldValue.arrayRemove(likes)});
+
     return Fluttertoast.showToast(msg: Strings.removeLike);
   }
 
+  // metodo per eliminare l'allenamento
   deleteWorkout() {
     FirebaseFirestore.instance.collection("workouts").doc(data.id).delete();
     return Fluttertoast.showToast(msg: Strings.deleteWorkout);
@@ -98,6 +112,7 @@ class WorkoutDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // bottone per accedere alla schermata del timer
     final timerButton = ElevatedButton(
         style: ElevatedButton.styleFrom(
             primary: Colors.deepPurple,
@@ -113,6 +128,7 @@ class WorkoutDetails extends StatelessWidget {
           style: TextStyle(fontSize: 20, color: Colors.white),
         ));
 
+    // bottone per mettere/togliere Mi Piace
     final likesButton = ElevatedButton(
         style: ElevatedButton.styleFrom(
             primary: Colors.white,
@@ -133,6 +149,7 @@ class WorkoutDetails extends StatelessWidget {
               )
             : Icon(FontAwesome.thumbs_down, color: Colors.red));
 
+    // bottoner per eliminare l'allenamento
     final deleteWorkoutButton = ElevatedButton(
       style: ElevatedButton.styleFrom(
           primary: Colors.red,
@@ -152,6 +169,8 @@ class WorkoutDetails extends StatelessWidget {
         title: Text(data["name"]),
         elevation: 0,
         actions: <Widget>[
+          // bottone per inserire/togliere dai preferiti l'allenamento
+          // è posizionato sulla parte destra dell'AppBar
           IconButton(
             onPressed: () {
               if (!checkFavourite()) {

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:massigym_flutter/ui/workout/workout_details.dart';
 
+// schermata contenente la lista dei workout preferiti dall'utente
 class Preferiti extends StatefulWidget {
   Preferiti({Key? key}) : super(key: key);
 
@@ -16,6 +17,7 @@ class _PreferitiState extends State<Preferiti> {
   @override
   Widget build(BuildContext context) {
     Widget workoutList = StreamBuilder<QuerySnapshot>(
+        // ottiene dal db tutti gli allenamenti preferiti dall'utente
         stream: FirebaseFirestore.instance
             .collection("workouts")
             .where('favourites', arrayContains: user!.email)
@@ -29,8 +31,8 @@ class _PreferitiState extends State<Preferiti> {
                     DocumentSnapshot data = snapshot.data!.docs[index];
                     return Card(
                       child: ListTile(
-                        title:
-                            Text("${data["name"]}        ${data["duration"]} s"),
+                        title: Text(
+                            "${data["name"]}        ${data["duration"]} s"),
                         subtitle: Text(
                             "${data["category"]}        ${data["userName"]}"),
                         leading: SizedBox(
@@ -53,6 +55,7 @@ class _PreferitiState extends State<Preferiti> {
                             SizedBox(
                               height: 8,
                             ),
+                            // mostra il numero totale di Mi Piace di quell'allenamento
                             Text(
                               "${enumerateLikes(data)}",
                               style: TextStyle(fontWeight: FontWeight.w500),
@@ -81,6 +84,7 @@ class _PreferitiState extends State<Preferiti> {
   }
 }
 
+// metodo che calcola il numero di mi piace messi ad ogni singolo allenamento
 enumerateLikes(data) {
   int likes = 0;
   for (String like in data["likes"]) {

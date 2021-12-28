@@ -4,6 +4,7 @@ import 'package:massigym_flutter/strings.dart';
 import 'package:massigym_flutter/ui/common/searchWorkout.dart';
 import 'package:massigym_flutter/ui/workout/workout_details.dart';
 
+// schermata che mostra gli allenamenti della categoria "arms", invocando il file "searchWorkout.dart"
 class Arms extends StatefulWidget {
   Arms({Key? key}) : super(key: key);
 
