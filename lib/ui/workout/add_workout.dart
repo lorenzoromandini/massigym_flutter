@@ -191,7 +191,7 @@ class _AddWorkoutState extends State<AddWorkout> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.account_circle),
+          prefixIcon: const Icon(Icons.book),
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Nome",
           border: OutlineInputBorder(
@@ -249,7 +249,7 @@ class _AddWorkoutState extends State<AddWorkout> {
       },
       textInputAction: TextInputAction.next,
       decoration: InputDecoration(
-          prefixIcon: const Icon(Icons.account_circle),
+          prefixIcon: const Icon(Icons.description),
           contentPadding: const EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Descrizione",
           border: OutlineInputBorder(
