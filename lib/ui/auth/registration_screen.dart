@@ -226,7 +226,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
     if (_formKey.currentState!.validate()) {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
-          .then((value) => {postDetailsToFirestore()})
+          .then((value) => {postToFirestore()})
           .catchError((e) {
         Fluttertoast.showToast(msg: e!.message);
       });
@@ -234,7 +234,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   }
 
   // metodo che svolge il compito di inserire i dati immessi nella form all'interno del database Firebase Firestore
-  void postDetailsToFirestore() async {
+  void postToFirestore() async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
 
@@ -250,6 +250,8 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         .set(userModel.toMap());
 
     Fluttertoast.showToast(msg: "Account creato con successo");
+
+    await FirebaseAuth.instance.signOut();
 
     Navigator.pushAndRemoveUntil(
         (context),
