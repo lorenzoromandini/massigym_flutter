@@ -27,7 +27,7 @@ class Strings {
   static const String passwordInvalid =
       "Immettere una Password valida. (Min. 6 caratteri)";
 
-  static const String notRegisteredYet = "Non sei ancora registrato ? ";
+  static const String notRegisteredYet = "Non sei ancora registrato? ";
 
   static const String loginDone = "Login effettuato";
 
@@ -37,9 +37,11 @@ class Strings {
 
   static const String passwordNotEquals = "Le Password non coincidono";
 
-  static const String yetRegistered = "Sei già registrato ? ";
+  static const String yetRegistered = "Sei già registrato? ";
 
   static const String passwordConfirm = "Conferma Password";
+
+  static const String profileImageChanged = "Immagine caricata";
 
   static const String changePassword = "Modifica Password";
   static const String passwordChangedSuccessfully =
