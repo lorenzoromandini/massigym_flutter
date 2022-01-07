@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:massigym_flutter/strings.dart';
+import 'package:massigym_flutter/ui/auth/reset_password.dart';
 import 'package:massigym_flutter/ui/common/bottomNavBar.dart';
 import 'package:massigym_flutter/ui/auth/registration_screen.dart';
 
@@ -150,7 +151,24 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                         ],
-                      )
+                      ),
+                      const SizedBox(height: 20),
+                      GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ResetPassword()));
+                            },
+                            child: const Text(
+                              "Password dimenticata?",
+                              style: TextStyle(
+                                  color: Colors.deepPurpleAccent,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15),
+                            ),
+                          ),
                     ]),
               ),
             ),

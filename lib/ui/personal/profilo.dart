@@ -76,6 +76,8 @@ class _ProfiloState extends State<Profilo> {
             .collection("users")
             .doc(user!.email)
             .update({"imageUrl": userModel.profileImageUrl});
+
+        Fluttertoast.showToast(msg: Strings.profileImageChanged);
       } else {
         Fluttertoast.showToast(msg: Strings.noPathReceived);
       }
@@ -116,6 +118,8 @@ class _ProfiloState extends State<Profilo> {
             .collection("users")
             .doc(user!.email)
             .update({"imageUrl": userModel.profileImageUrl});
+
+        Fluttertoast.showToast(msg: Strings.profileImageChanged);
       } else {
         Fluttertoast.showToast(msg: Strings.noPathReceived);
       }
@@ -213,31 +217,33 @@ class _ProfiloState extends State<Profilo> {
               icon: const Icon(Icons.exit_to_app))
         ],
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(40, 70, 40, 40),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              imageCard,
-              SizedBox(
-                height: 30,
-              ),
-              Row(children: [
-                uploadImageButton,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(40, 70, 40, 40),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                imageCard,
                 SizedBox(
-                  width: 12,
+                  height: 30,
                 ),
-                shootImageButton,
-              ]),
-              SizedBox(height: 35),
-              credentialCard,
-              SizedBox(
-                height: 40,
-              ),
-              changePasswordButton,
-            ],
+                Row(children: [
+                  uploadImageButton,
+                  SizedBox(
+                    width: 12,
+                  ),
+                  shootImageButton,
+                ]),
+                SizedBox(height: 35),
+                credentialCard,
+                SizedBox(
+                  height: 40,
+                ),
+                changePasswordButton,
+              ],
+            ),
           ),
         ),
       ),
