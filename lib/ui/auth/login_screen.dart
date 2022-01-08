@@ -154,21 +154,20 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       const SizedBox(height: 20),
                       GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const ResetPassword()));
-                            },
-                            child: const Text(
-                              "Password dimenticata?",
-                              style: TextStyle(
-                                  color: Colors.deepPurpleAccent,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 15),
-                            ),
-                          ),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const ResetPassword()));
+                        },
+                        child: const Text(
+                          Strings.forgotPassword,
+                          style: TextStyle(
+                              color: Colors.deepPurpleAccent,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15),
+                        ),
+                      ),
                     ]),
               ),
             ),
