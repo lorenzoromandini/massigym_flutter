@@ -39,6 +39,8 @@ class Strings {
   static const String usernameInvalid =
       "Immettere uno Username valido. (Min. 5 caratteri)";
 
+  static const String passwordConfirmRequired = "Conferma Password richiesta";
+
   static const String passwordNotEquals = "Le Password non coincidono";
 
   static const String yetRegistered = "Sei già registrato? ";
