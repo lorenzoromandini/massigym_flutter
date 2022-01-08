@@ -236,7 +236,7 @@ class _AddWorkoutState extends State<AddWorkout> {
       keyboardType: TextInputType.name,
       // regole per l'inserimento della descrizione
       validator: (value) {
-        RegExp regexp = RegExp(r'^.{15,}$');
+        RegExp regexp = RegExp(r'^.{10,}$');
         if (value!.isEmpty) {
           return (Strings.descriptionRequired);
         }

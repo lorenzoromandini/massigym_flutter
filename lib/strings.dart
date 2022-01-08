@@ -47,7 +47,9 @@ class Strings {
 
   static const String passwordConfirm = "Conferma Password";
 
-  static const String profileImageChanged = "Immagine caricata";
+  static const String registrationSuccess = "Account creato con successo";
+
+  static const String profileImageChanged = "Immagine caricata con successo";
 
   static const String changePassword = "Modifica Password";
   static const String passwordChangedSuccessfully =

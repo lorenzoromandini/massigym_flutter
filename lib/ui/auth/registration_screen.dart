@@ -252,7 +252,7 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         .doc(user!.email)
         .set(userModel.toMap());
 
-    Fluttertoast.showToast(msg: "Account creato con successo");
+    Fluttertoast.showToast(msg: Strings.registrationSuccess);
 
     await FirebaseAuth.instance.signOut();
 
