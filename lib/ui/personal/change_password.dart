@@ -54,8 +54,11 @@ class _ChangePasswordState extends State<ChangePassword> {
       autofocus: false,
       controller: confermaPasswordController,
       obscureText: true,
-      // password e conferma password sono differenti
       validator: (value) {
+        if (value!.isEmpty) {
+          return (Strings.passwordConfirmRequired);
+        }
+        // password e conferma password sono differenti
         if (confermaPasswordController.text != passwordController.text) {
           return Strings.passwordNotEquals;
         }
