@@ -29,6 +29,10 @@ class Strings {
 
   static const String notRegisteredYet = "Non sei ancora registrato? ";
 
+  static const String forgotPassword = "Password dimenticata?";
+
+  static const String sendResetPassword = "Richiesta inviata";
+
   static const String loginDone = "Login effettuato";
 
   static const String usernameRequired = "Username richiesto";

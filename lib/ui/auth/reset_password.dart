@@ -2,8 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:massigym_flutter/strings.dart';
-import 'package:massigym_flutter/ui/common/bottomNavBar.dart';
-import 'package:massigym_flutter/ui/auth/registration_screen.dart';
 
 // schermata di Login
 class ResetPassword extends StatefulWidget {
@@ -51,7 +49,7 @@ class _ResetPasswordState extends State<ResetPassword> {
           )),
     );
 
-    // bottone del login
+    // bottone del reset
     final resetButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
@@ -62,7 +60,7 @@ class _ResetPasswordState extends State<ResetPassword> {
         onPressed: () {
           if (_formKey.currentState!.validate()) {
           auth.sendPasswordResetEmail(email: emailController.text);
-          Fluttertoast.showToast(msg: "Richiesta inviata");
+          Fluttertoast.showToast(msg: Strings.sendResetPassword);
           Navigator.pop(context);
           }
         },
