@@ -254,6 +254,7 @@ class _ProfiloState extends State<Profilo> {
   // reindirizzato alla schermata di login
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
+    Fluttertoast.showToast(msg: "Logout effettuato");
     Navigator.pushAndRemoveUntil(
         context,
         MaterialPageRoute(builder: (context) => const LoginScreen()),

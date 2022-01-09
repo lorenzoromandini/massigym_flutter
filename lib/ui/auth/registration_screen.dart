@@ -40,6 +40,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         if (!regexp.hasMatch(value)) {
           return (Strings.usernameInvalid);
         }
+        if (FirebaseFirestore.instance.collection("users").where("username", isEqualTo: value) != null) {
+          return ("Esiste già un utente con questo Username");
+        }
       },
       onSaved: (value) {
         usernameController.text = value!;
@@ -67,6 +70,9 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         }
         if (!regexp.hasMatch(value)) {
           return (Strings.emailInvalid);
+        }
+        if (FirebaseFirestore.instance.collection("users").doc(value) != null) {
+          return ("Esiste già un utente con questa Email");
         }
         return null;
       },
