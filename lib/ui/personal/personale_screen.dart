@@ -15,7 +15,6 @@ class PersonaleScreen extends StatefulWidget {
 class _PersonaleScreenState extends State<PersonaleScreen> {
   @override
   Widget build(BuildContext context) {
-
     // bottone per accedere all'area degli allenamenti inseriti dall'utente
     final personalWorkoutButton = Material(
       elevation: 5,

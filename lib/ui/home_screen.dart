@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:massigym_flutter/strings.dart';
+import 'package:massigym_flutter/ui/statistics/statisticsTabBar.dart';
 
 // schermata delle home dell'applicazione
 class HomeScreen extends StatefulWidget {
@@ -13,7 +14,19 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text("Home")),
+        appBar: AppBar(
+          title: const Text("Home"),
+          actions: <Widget>[
+            IconButton(
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => StatisticsTabBar()));
+                },
+                icon: Icon(Icons.pie_chart_outline))
+          ],
+        ),
         body: SingleChildScrollView(
             child: Column(children: [
           Column(crossAxisAlignment: CrossAxisAlignment.start, children: [

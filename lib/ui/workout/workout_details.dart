@@ -86,6 +86,11 @@ class WorkoutDetails extends StatelessWidget {
         .doc(data.id)
         .update({"likes": FieldValue.arrayUnion(likes)});
 
+    FirebaseFirestore.instance
+        .collection("statistics")
+        .doc(data["category"])
+        .update({"totalLikes": FieldValue.increment(1)});
+
     return Fluttertoast.showToast(msg: Strings.addLike);
   }
 
@@ -101,13 +106,25 @@ class WorkoutDetails extends StatelessWidget {
         .doc(data.id)
         .update({"likes": FieldValue.arrayRemove(likes)});
 
+    FirebaseFirestore.instance
+        .collection("statistics")
+        .doc(data["category"])
+        .update({"totalLikes": FieldValue.increment(-1)});
+
     return Fluttertoast.showToast(msg: Strings.removeLike);
   }
 
   // metodo per eliminare l'allenamento
   deleteWorkout() {
     FirebaseFirestore.instance.collection("workouts").doc(data.id).delete();
+
+    FirebaseFirestore.instance
+        .collection("statistics")
+        .doc(data["category"])
+        .update({"totalWorkouts": FieldValue.increment(-1)});
     return Fluttertoast.showToast(msg: Strings.deleteWorkout);
+
+    
   }
 
   @override
