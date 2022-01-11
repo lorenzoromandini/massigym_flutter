@@ -221,7 +221,6 @@ class _AddWorkoutState extends State<AddWorkout> {
       child: DropdownButtonFormField<String>(
         hint: Text("Categoria"),
         value: categoryValue,
-        icon: Icon(Icons.arrow_drop_down, color: Colors.black),
         iconSize: 36,
         isExpanded: true,
         items: category.map(buildMenuItem).toList(),
@@ -273,7 +272,6 @@ class _AddWorkoutState extends State<AddWorkout> {
       child: DropdownButtonFormField<String>(
         hint: Text("Durata"),
         value: durationValue,
-        icon: Icon(Icons.arrow_drop_down, color: Colors.black),
         iconSize: 36,
         isExpanded: true,
         items: duration.map(buildMenuItem).toList(),
