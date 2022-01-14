@@ -104,6 +104,7 @@ class _AddWorkoutState extends State<AddWorkout> {
         workoutModel.likes = [];
         workoutModel.imageUrl = "";
         workoutModel.videoUrl = "";
+        workoutModel.totalLikes = 0;
 
         // divido il nome del workout per caratteri successivi : questo servirà per la barra di ricerca
         List<String> splitName = name.split(" ");

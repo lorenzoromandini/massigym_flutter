@@ -21,6 +21,8 @@ class _PreferitiState extends State<Preferiti> {
         stream: FirebaseFirestore.instance
             .collection("workouts")
             .where('favourites', arrayContains: user!.email)
+            .orderBy("totalLikes", descending: true)
+            .orderBy("name")
             .snapshots(),
         builder: (context, snapshot) {
           return (snapshot.connectionState == ConnectionState.waiting)
@@ -57,7 +59,7 @@ class _PreferitiState extends State<Preferiti> {
                             ),
                             // mostra il numero totale di Mi Piace di quell'allenamento
                             Text(
-                              "${enumerateLikes(data)}",
+                              "${data["totalLikes"]}",
                               style: TextStyle(fontWeight: FontWeight.w500),
                             ),
                           ],
@@ -82,13 +84,4 @@ class _PreferitiState extends State<Preferiti> {
         ),
         body: workoutList);
   }
-}
-
-// metodo che calcola il numero di mi piace messi ad ogni singolo allenamento
-enumerateLikes(data) {
-  int likes = 0;
-  for (String like in data["likes"]) {
-    likes++;
-  }
-  return likes;
 }

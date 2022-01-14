@@ -86,6 +86,11 @@ class WorkoutDetails extends StatelessWidget {
         .doc(data.id)
         .update({"likes": FieldValue.arrayUnion(likes)});
 
+        FirebaseFirestore.instance
+        .collection("workouts")
+        .doc(data.id)
+        .update({"totalLikes": FieldValue.increment(1)});
+
     FirebaseFirestore.instance
         .collection("statistics")
         .doc(data["category"])
@@ -105,6 +110,11 @@ class WorkoutDetails extends StatelessWidget {
         .collection("workouts")
         .doc(data.id)
         .update({"likes": FieldValue.arrayRemove(likes)});
+
+        FirebaseFirestore.instance
+        .collection("workouts")
+        .doc(data.id)
+        .update({"totalLikes": FieldValue.increment(-1)});
 
     FirebaseFirestore.instance
         .collection("statistics")

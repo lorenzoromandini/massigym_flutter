@@ -13,6 +13,7 @@ class WorkoutModel {
   List<String>? searchKeyList;
   List<String>? favourites;
   List<String>? likes;
+  int? totalLikes;
 
   WorkoutModel(
       {this.category,
@@ -24,7 +25,8 @@ class WorkoutModel {
       this.name,
       this.likes,
       this.userMail,
-      this.userName});
+      this.userName,
+      this.totalLikes});
 
   // ottiene i dati dell'allenamento dal db e li inserisce all'interno di un oggetto di tipo Workout
   factory WorkoutModel.fromMap(map) {
@@ -39,6 +41,7 @@ class WorkoutModel {
       videoUrl: map["videoUrl"],
       favourites: map["favourites"] == null ? null : map["favourites"],
       likes: map["likes"] == null ? null : map["likes"],
+      totalLikes: map["totalLikes"]
     );
   }
 
@@ -55,7 +58,8 @@ class WorkoutModel {
       'videoUrl': videoUrl,
       'favourites': favourites,
       'likes': likes,
-      'searchKeywords': searchKeyList
+      'searchKeywords': searchKeyList,
+      'totalLikes': totalLikes
     };
   }
 }

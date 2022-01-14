@@ -13,11 +13,15 @@ Widget searchWorkout(String? category, String? name) {
               .collection("workouts")
               .where("category", isEqualTo: category)
               .where("searchKeywords", arrayContains: name)
+              .orderBy("totalLikes", descending: true)
+              .orderBy("name")
               .snapshots()
           // se non è inserito nulla mostra tutti i workout dell'apposita categoria
           : FirebaseFirestore.instance
               .collection("workouts")
               .where("category", isEqualTo: category)
+              .orderBy("totalLikes", descending: true)
+              .orderBy("name")
               .snapshots(),
       builder: (context, snapshot) {
         return (snapshot.connectionState == ConnectionState.waiting)
@@ -64,7 +68,7 @@ Widget searchWorkout(String? category, String? name) {
                           ),
                           // mostra il numero totale di Mi Piace di quell'allenamento
                           Text(
-                            "${enumerateLikes(data)}",
+                            "${data["totalLikes"]}",
                             style: TextStyle(fontWeight: FontWeight.w500),
                           ),
                         ],
