@@ -163,12 +163,11 @@ class _AddWorkoutState extends State<AddWorkout> {
             .doc()
             .set(workoutModel.toMap());
 
-
+        // incrementa di 1 il numero di workout di quella categoria nel campo delle statistiche
         await FirebaseFirestore.instance
-        .collection("statistics")
-        .doc(workoutModel.category)
-        .update({"totalWorkouts": FieldValue.increment(1)});
-
+            .collection("statistics")
+            .doc(workoutModel.category)
+            .update({"totalWorkouts": FieldValue.increment(1)});
 
         Fluttertoast.showToast(msg: Strings.addWorkoutSuccess);
 

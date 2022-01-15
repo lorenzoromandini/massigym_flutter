@@ -86,11 +86,13 @@ class WorkoutDetails extends StatelessWidget {
         .doc(data.id)
         .update({"likes": FieldValue.arrayUnion(likes)});
 
-        FirebaseFirestore.instance
+    // incrementa di 1 il numero di likes di quell'allenamento
+    FirebaseFirestore.instance
         .collection("workouts")
         .doc(data.id)
         .update({"totalLikes": FieldValue.increment(1)});
 
+    // incrementa di 1 il numero di like in quella categoria nel campo delle statistiche
     FirebaseFirestore.instance
         .collection("statistics")
         .doc(data["category"])
@@ -111,11 +113,13 @@ class WorkoutDetails extends StatelessWidget {
         .doc(data.id)
         .update({"likes": FieldValue.arrayRemove(likes)});
 
-        FirebaseFirestore.instance
+    // decrementa di 1 il numero di likes di quell'allenamento
+    FirebaseFirestore.instance
         .collection("workouts")
         .doc(data.id)
         .update({"totalLikes": FieldValue.increment(-1)});
 
+    // decrementa di 1 il numero di like in quella categoria nel campo delle statistiche
     FirebaseFirestore.instance
         .collection("statistics")
         .doc(data["category"])
@@ -128,13 +132,13 @@ class WorkoutDetails extends StatelessWidget {
   deleteWorkout() {
     FirebaseFirestore.instance.collection("workouts").doc(data.id).delete();
 
+    // decrementa di 1 il numero di workout di quella categoria nel campo delle statistiche
     FirebaseFirestore.instance
         .collection("statistics")
         .doc(data["category"])
         .update({"totalWorkouts": FieldValue.increment(-1)});
-    return Fluttertoast.showToast(msg: Strings.deleteWorkout);
 
-    
+    return Fluttertoast.showToast(msg: Strings.deleteWorkout);
   }
 
   @override

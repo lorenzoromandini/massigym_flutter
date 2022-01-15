@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:massigym_flutter/models/statistics_model.dart';
 
+// schermata che mostra le statistiche del numero di workouts per ogni categoria di allenamento e genera un grafico a torta
+// attraverso l'utilizzo del package "charts_flutter"
 class WorkoutsPerCategory extends StatefulWidget {
   WorkoutsPerCategory({Key? key}) : super(key: key);
 
@@ -14,11 +16,15 @@ class _WorkoutsPerCategoryState extends State<WorkoutsPerCategory> {
   List<charts.Series<StatisticsModel, String>> seriesBarData = [];
   List<StatisticsModel> data = [];
 
+  // metodo che serve ad ottenere i dati per costruire il grafico a partire da un oggetto di tipo StatisticsModel
   generateData(data) {
     seriesBarData.add(charts.Series(
+        // categoria da analizzare
         domainFn: (StatisticsModel statistics, _) =>
             statistics.category.toString(),
+        // numero di workout per ciascuna categoria
         measureFn: (StatisticsModel statistics, _) => statistics.totalWorkouts,
+        // colore della sezione circolare
         colorFn: (StatisticsModel statistics, _) =>
             charts.ColorUtil.fromDartColor(Color(int.parse(statistics.color!))),
         id: "Workouts",
@@ -69,6 +75,7 @@ class _WorkoutsPerCategoryState extends State<WorkoutsPerCategory> {
                   height: 10,
                 ),
                 Expanded(
+                  // realizzazione del grafico a torta
                     child: charts.PieChart(
                   seriesBarData,
                   animate: true,
@@ -86,10 +93,12 @@ class _WorkoutsPerCategoryState extends State<WorkoutsPerCategory> {
                             fontFamily: "Georgia",
                             fontSize: 18)),
                   ],
+                  // proprietà della circonferenza
                   defaultRenderer: new charts.ArcRendererConfig(
                       arcWidth: 100,
                       arcRendererDecorators: [
                         new charts.ArcLabelDecorator(
+                          // numero di workout rappresentati all'interno di ciascuno spicchio
                             labelPosition: charts.ArcLabelPosition.inside)
                       ]),
                 ))

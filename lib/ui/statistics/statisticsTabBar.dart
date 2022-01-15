@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:massigym_flutter/ui/statistics/likes_per_category.dart';
 import 'package:massigym_flutter/ui/statistics/workouts_per_category.dart';
 
+// barra di navigazione disposta nella parte superiore della schermata delle Statistiche che gestisce il passaggio
+// tra i due grafici realizzati
 class StatisticsTabBar extends StatefulWidget {
   StatisticsTabBar({Key? key}) : super(key: key);
 
