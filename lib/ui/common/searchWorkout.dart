@@ -85,12 +85,3 @@ Widget searchWorkout(String? category, String? name) {
               );
       });
 }
-
-// metodo che calcola il numero di mi piace messi ad ogni singolo allenamento
-enumerateLikes(data) {
-  int likes = 0;
-  for (String like in data["likes"]) {
-    likes++;
-  }
-  return likes;
-}
